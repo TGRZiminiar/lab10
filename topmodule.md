@@ -21,11 +21,9 @@
     
     
     module topmodule(
-        input clk, sw, clk2,
+        input clk, sw,
         output [6:0] seg,
-        output [12:6] seg2,
         output [3:0] AN,
-        output [6:3] AN2
         );
         wire [3:0] count, count2;
         wire clk_out;

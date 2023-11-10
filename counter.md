@@ -22,35 +22,29 @@
 
 module counter1(
     input clk_in,
-    input clk_in2,
     input sw,
-    output reg[3:0] led,
-    output reg[3:6] led2
+    output reg[3:0] digit1, digit2
     );
-    initial led = 4'b0000;
-    begin
-        always @(posedge clk_in)
-        if (sw)
-            led <= 4'b0000;
-        else 
-            if(clk_in == 1)
-                if (led >= 4'b1001)
-                    led <= 4'b0000;
-                else
-                    led = led + 4'b0001;
-    end
 
-    initial led2 = 4'b0000;
-    begin 
-        always @(posedge clk_in2)
-        if (sw)
-            led2 <= 4'b0000;
-        else 
-            if(clk_in2 == 1)
-                if (led2 >= 4'b1001)
-                    led2 <= 4'b0000;
-                else
-                    led2 = led2 + 4'b0001;
+    initial digit1 = 4'b0000;
+    initial digit2 = 4'b0000;
+    always @(posedge clk_in)
+    if (sw) begin
+        digit1 <= 4'b0000;
+        digit2 <= 4'b0000;
     end
+    else 
+        if(clk_in == 1)
+            if(digit1 >= 4'b1001) begin
+                digit1 <= 4'b0000;
+                if(digit2 >= 4'b0101) begin
+                    digit1 <= 4'b0000;
+                    digit2 <= 4'b0000;
+                end
+                else
+                    digit2 = digit2 + 4'b0001;
+                end
+            else
+                digit1 = digit1 + 4'b0001;
 endmodule
     
