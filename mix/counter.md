@@ -20,31 +20,33 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 
-module counter1(
+module counters(
     input clk_in,
     input sw,
-    output reg[3:0] digit1, digit2
+    output reg [3:0] NumTwo, NumOne    
     );
+    initial NumTwo = 4'b0000;
+    initial NumOne = 4'b0000;
 
-    initial digit1 = 4'b0000;
-    initial digit2 = 4'b0000;
     always @(posedge clk_in)
         if (sw) begin
-            digit1 <= 4'b0000;
-            digit2 <= 4'b0000;
+            NumOne <= 4'b0000;
+            NumTwo <= 4'b0000;
         end
-        else 
+
+        else
             if(clk_in == 1)
-                if(digit1 >= 4'b1001) begin
-                    digit1 <= 4'b0000;
-                    if(digit2 >= 4'b0101) begin
-                        digit1 <= 4'b0000;
-                        digit2 <= 4'b0000;
+                if (NumOne >= 4'b1001) begin
+                    NumOne <= 4'b0000;
+                    if(NumTwo >= 4'b0101) begin
+                        NumOne <= 4'b0000;
+                        NumTwo <= 4'b0000;
                     end
                     else
-                        digit2 = digit2 + 4'b0001;
+                        NumTwo = NumTwo + 4'b0001;
                     end
                 else
-                    digit1 = digit1 + 4'b0001;
+                    NumOne = NumOne + 4'b0001;
 endmodule
+
     

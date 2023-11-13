@@ -1,4 +1,3 @@
-
 `timescale 1ns / 1ps
 //////////////////////////////////////////////////////////////////////////////////
 // Company: 
@@ -22,15 +21,16 @@
 
 
 module divider1 ( 
-    input clock, 
+    input clock,
     output clk_out,
-    output reg [3:0] AN
+    output reg [3:0] AN    
 );
-    reg elapsed;//elapsed time 1 second 
+
+    reg elapsed;
     reg [27:0] state;
 
     always @ (posedge clock) begin
-        if (state == 100000000) state <= 0; 
+        if (state == 100000000) state <= 0;
         else state <= state + 1;
         end
     always @ (state) begin
@@ -42,9 +42,7 @@ module divider1 (
         endcase
     end
     always @(state)
-        if (state == 100000000) elapsed = 1;
-        else elapsed = 0; 
+        if(state == 100000000) elapsed = 1;
+        else elapsed = 0;
     assign clk_out = elapsed;
-
-  
 endmodule

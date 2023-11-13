@@ -20,18 +20,18 @@
     //////////////////////////////////////////////////////////////////////////////////
     
     
-    module topmodule(
-        input clk, sw,
+    module topmodules(
+        input clk, clear,
         output [6:0] seg,
         output [3:0] AN
         );
-        wire [3:0] count, count2;
-        wire clkxw_out;
+        wire [3:0] count1, count2;
+        wire clk_out;
 
-        divider1 divide(clk, clk_out, AN);
+        divider divide(clk, clk_out, AN);
         
-        counter1 encoder(clk_out, sw, count2, count);
+        counters encoder(clk_out, clear, count2, count1);
     
-        bcdto7seg1 visualizer(count2, count, seg, AN);
+        bcdtosegs7 visualizer(count2, count1, seg, AN);
         
     endmodule
