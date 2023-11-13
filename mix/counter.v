@@ -36,12 +36,16 @@ module counters(
 
         else
             if(clk_in == 1)
+                // NumOne >= 9
                 if (NumOne >= 4'b1001) begin
+                    // NumOne == 0 || Rest to 0
                     NumOne <= 4'b0000;
+                    // NumTwo >= 5 Reset Num1 And Num2 To 0
                     if(NumTwo >= 4'b0101) begin
                         NumOne <= 4'b0000;
                         NumTwo <= 4'b0000;
                     end
+                    
                     else
                         NumTwo = NumTwo + 4'b0001;
                     end

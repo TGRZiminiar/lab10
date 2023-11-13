@@ -26,14 +26,17 @@ module counter1(
     output reg[3:0] led
     );
     initial led = 4'b0000;
+    
     always @(posedge clk_in)
-    if (sw)
-        led <= 4'b0000;
-    else 
-        if(clk_in == 1)
-            if (led >= 4'b1001)
-                led <= 4'b0000;
-            else
-                led = led + 4'b0001;
+        if (sw)
+            led <= 4'b0000;
+        else 
+            if(clk_in == 1)
+                // led >= 9
+                if (led >= 4'b1001)
+                    led <= 4'b0000;
+                else
+                    // led += 1
+                    led = led + 4'b0001;
     
     endmodule
