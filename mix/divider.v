@@ -35,6 +35,13 @@ module divider (
         else state <= state + 1;
     end
     
+    always @(state) begin
+        if(state == 100000000) elapsed = 1;
+        else elapsed = 0;
+    end
+    
+    assign clk_out = elapsed;
+
     // Check If the position at 15 is a bit 0 or 1
     // Why we need to check this
     always @ (state) begin
@@ -47,11 +54,6 @@ module divider (
             AN <= 4'b1101;
         endcase
     end
-
-    always @(state)
-        if(state == 100000000) elapsed = 1;
-        else elapsed = 0;
         
-    assign clk_out = elapsed;
 
 endmodule
