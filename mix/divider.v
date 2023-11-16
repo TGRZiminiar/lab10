@@ -29,7 +29,6 @@ module divider (
     reg elapsed;
     reg [27:0] state;
 
-    
     always @ (posedge clock) begin
         if (state == 100000000) state <= 0;
         else state <= state + 1;
@@ -47,10 +46,8 @@ module divider (
     always @ (state) begin
         case(state[15])
         1'b0:
-            // 1110 = 14
             AN <= 4'b1110;
         1'b1:
-            // 1101 = 13
             AN <= 4'b1101;
         endcase
     end

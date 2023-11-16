@@ -21,12 +21,12 @@
 
 
 module bcdto7seg1(
-    input [3:0] led,
+    input [3:0] count,
     output reg[6:0] seg, output reg [3:0] AN
     );
-    always @(led)
+    always @(count)
     begin
-        case (led)
+        case (count)
         4'b0000 : seg <= 7'b1000000;
         4'b0001 : seg <= 7'b1111001;
         4'b0010 : seg <= 7'b0100100;

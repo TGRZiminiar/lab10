@@ -20,23 +20,8 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 
-module counter1(
-    input clk_in,
-    input sw,
-    output reg[3:0] count
-    );
-    initial count = 4'b0000;
+module counter(
     
-    always @(posedge clk_in)
-        if (sw)
-            count <= 4'b0000;
-        else 
-            if(clk_in == 1)
-                // count >= 9
-                if (count >= 4'b1001)
-                    count <= 4'b0000;
-                else
-                    // count += 1
-                    count = count + 4'b0001;
+);
     
     endmodule
