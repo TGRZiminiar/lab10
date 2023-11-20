@@ -1,6 +1,6 @@
 // Code your testbench here
 // or browse Examples
-
+// hello
 module ALU (
   
   input [3:0] ALU_control, Ain, Bin,
@@ -23,12 +23,13 @@ module ALU (
      default: ACC_out = 4'b0000;
     endcase
 
-
     if(ALU_control == 4'b0010 || ALU_control == 4'b0001) begin
       if((~Ain[3] & Bin[3] & ~ALU_control[3]) | (Ain[3] & Bin[3] && ~ALU_control[3])) begin
         v = 1;
       end
-      else v = 0;
+      else begin
+        v = 0; 
+      end
     end
     else v = 0;
 
