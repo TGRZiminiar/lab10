@@ -15,4 +15,3 @@ module topmodule;
     bcdto7seg1 visualizer(count, seg, AN);
     
 endmodule
-// initial $monitor("%b", count);

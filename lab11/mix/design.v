@@ -1,5 +1,5 @@
 // Code your design here
-
+// Eda playground
 module tb_allu;
   
   reg [3:0] ALU_control, Ain, Bin;
@@ -17,6 +17,5 @@ module tb_allu;
   ALU alu(ALU_control, Ain, Bin, ALU_out, v, z, c);
   
   initial $monitor("ALU_OUT = %b v = %b, z = %b, c = %b", ALU_out, v, z, c);
-
   
 endmodule
