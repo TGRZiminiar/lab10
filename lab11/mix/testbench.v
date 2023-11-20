@@ -22,28 +22,29 @@ module ALU (
       4'b1100: ACC_out = Ain >> 2;
      default: ACC_out = 4'b0000;
     endcase
-   
-      if(ALU_control == 4'b0010 || ALU_control == 4'b0001) begin
-        if((~Ain[3] & Bin[3] & ~ALU_control[3]) | (Ain[3] & Bin[3] && ~ALU_control[3])) begin
-         	v = 1;
-        end
-        else v = 0;
+
+
+    if(ALU_control == 4'b0010 || ALU_control == 4'b0001) begin
+      if((~Ain[3] & Bin[3] & ~ALU_control[3]) | (Ain[3] & Bin[3] && ~ALU_control[3])) begin
+        v = 1;
       end
       else v = 0;
-      
-      if(ACC_out == 4'b0000) z = 1;
-      else z = 0;
-      
-      if(ALU_control == 4'b0001) begin
-        if(Ain[3] & Bin[3] & ~ALU_control[3]) c = 1;
-        else c = 0;
-      end
+    end
+    else v = 0;
+
+    
+    
+    if(ACC_out == 4'b0000) z = 1;
+    else z = 0;
+    
+    if(ALU_control == 4'b0001) begin
+      if(Ain[3] & Bin[3] & ~ALU_control[3]) c = 1;
       else c = 0;
-      
-      ALU_out = ACC_out;
-      
-      end
-   
-  
-  	
+    end
+    else c = 0;
+    
+    ALU_out = ACC_out;
+    
+    end
 endmodule
+

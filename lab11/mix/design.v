@@ -7,13 +7,13 @@ module tb_allu;
   wire v,z,c;
   
 
-// Case8
-initial begin
-    Ain = 4'b0011;
-    Bin = 4'b0001;
-    ALU_control = 4'b1100;
-end
-  
+  // // Case8
+  initial begin 
+      Ain = 4'b1000;
+      Bin = 4'b1000;
+      ALU_control = 4'b0001;
+  end
+      
   ALU alu(ALU_control, Ain, Bin, ALU_out, v, z, c);
   
   initial $monitor("ALU_OUT = %b v = %b, z = %b, c = %b", ALU_out, v, z, c);

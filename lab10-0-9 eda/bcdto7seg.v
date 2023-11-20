@@ -1,10 +1,9 @@
 `timescale 1ns / 1ps
 
 
-module bcdto7seg1(
+module bcdto7seg(
     input [3:0] count,
-    output reg[6:0] seg, 
-    output reg [3:0] AN
+    output reg[6:0] seg, output reg [3:0] AN
     );
     always @(count)
     begin

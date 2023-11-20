@@ -1,11 +1,10 @@
 `timescale 1ns / 1ps
 
 
-module topmodule(
+module topmodule;
     input clk, sw,
-    output [6:0] seg,
-    output [3:0] AN
-    );
+    wire [6:0] seg,
+    wire [3:0] AN
     wire [3:0] count;
     wire clk_out;
 
@@ -16,3 +15,4 @@ module topmodule(
     bcdto7seg1 visualizer(count, seg, AN);
     
 endmodule
+// initial $monitor("%b", count);

@@ -2,7 +2,7 @@
 
 
 
-module divider1 ( 
+module divider ( 
     input clock, 
     output clk_out
 );

@@ -1,6 +1,6 @@
 `timescale 1ns / 1ps
 
-module counter1(
+module counter(
     input clk_in,
     input sw,
     output reg[3:0] count
