@@ -1,6 +1,5 @@
 // Code your testbench here
 // or browse Examples
-// hello
 module ALU (
   
   input [3:0] ALU_control, Ain, Bin,
@@ -11,7 +10,7 @@ module ALU (
   
   reg [3:0] ACC_out;
   
-  always@* begin
+  always@* begin  
     case(ALU_control)
       4'b0001: ACC_out = Ain + Bin;
       4'b0010: ACC_out = Ain - Bin;
@@ -33,8 +32,6 @@ module ALU (
     end
     else v = 0;
 
-    
-    
     if(ACC_out == 4'b0000) z = 1;
     else z = 0;
     

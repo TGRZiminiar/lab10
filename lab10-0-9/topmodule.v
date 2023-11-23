@@ -7,7 +7,7 @@ module topmodule(
     output [3:0] AN
     );
     wire [3:0] count;
-    wire clk_out;
+    wire clk_out;w
 
     // 0 -> 1 -> 2 
     // delay 1 s

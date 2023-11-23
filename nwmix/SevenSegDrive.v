@@ -1,3 +1,4 @@
+// This module use to represent the nubmer on 7 segment 4 digit that human eye can't catch
 module SevenSegDrive (
     input clk,
     input clr,
@@ -53,8 +54,6 @@ module SevenSegDrive (
                     an <= 4'b1110;
                     state <= LEFT;
                 end
-
-
                 default: 
             endcase
         end
