@@ -1,5 +1,4 @@
-// This module use to represent the nubmer on 7 segment 4 digit that human eye can't catch
-module SevenSegDrive (
+module SevenSeg (
     input clk,
     input clr,
     input [3:0] in1,
@@ -21,11 +20,10 @@ module SevenSegDrive (
     always @(posedge clk) begin
         segClk <= segClk + 1'b1; // Counter up by one
     end
-
     
     always @(posedge segClk[12] or posedge clr) begin
         if(clr == 1) begin
-            seg <= 7'b0000000;
+            seg <= 7'b  0000000;
             an <= 4'b0000;
             state <= LEFT;
         end
@@ -54,6 +52,8 @@ module SevenSegDrive (
                     an <= 4'b1110;
                     state <= LEFT;
                 end
+
+
                 default: 
             endcase
         end

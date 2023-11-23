@@ -15,7 +15,7 @@ module DigitalClock (
     // Time display
     // h2 h1 m2 m1 
     reg [5:0] hour = 0, min = 0, sec = 0; // max is 60 2^6 = 64
-    integer clck = 0;
+    integer clkc = 0;
     localparam onesec = 100_000_00; // 1 second
 
     always @(posedge clk) begin

@@ -24,7 +24,7 @@ module SevenSegDrive (
     
     always @(posedge segClk[12] or posedge clr) begin
         if(clr == 1) begin
-            seg <= 7'b0000000;
+            seg <= 7'b  0000000;
             an <= 4'b0000;
             state <= LEFT;
         end

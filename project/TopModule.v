@@ -15,9 +15,9 @@ module TopModule (
     wire btnCclr, btnUclr, btnRclr;
     reg btnCclr_prev, btnUclr_prev, btnRclr_prev;
 
-    Debounce dbC(clk, btnC, btnCclr);   
-    Debounce dbU(clk, btnU, btnUclr); // hour up
-    Debounce dbR(clk, btnR, btnRclr); // min up
+    // Debounce dbC(clk, btnC, btnCclr);   
+    // Debounce dbU(clk, btnU, btnUclr); // hour up
+    // Debounce dbR(clk, btnR, btnRclr); // min up
 
     // 1'b0 = clear set to 0
     SevenSegDrive seg7(clk, 1'b0, h2, h1, m2, m1, seg, an); //HH:MM
