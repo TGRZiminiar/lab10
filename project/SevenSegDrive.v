@@ -6,7 +6,7 @@ module SevenSegDrive (
     input [3:0] in3,
     input [3:0] in4,
     output reg [6:0] seg,
-    output reg [3:0] an,
+    output reg [3:0] an
 );
 
     wire [6:0] seg1, seg2, seg3, seg4;
@@ -54,8 +54,6 @@ module SevenSegDrive (
                     state <= LEFT;
                 end
 
-
-                default: 
             endcase
         end
     end

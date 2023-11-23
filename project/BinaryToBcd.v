@@ -1,9 +1,10 @@
+`timescale 1ns / 1ps
 module BinaryToBcd (
     input [11:0] binary,
-    output [3:0] thos,
-    output [3:0] hund,
-    output [3:0] tens,
-    output [3:0] ones,
+    output reg [3:0] thos,
+    output reg [3:0] hund,
+    output reg [3:0] tens,
+    output reg [3:0] ones
 );
 
     reg [11:0] bcd_data = 0;

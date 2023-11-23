@@ -9,13 +9,13 @@ module DigitalClock (
     output [3:0] m1,
     output [3:0] m2,
     output [3:0] h1,
-    output [3:0] h2,
+    output [3:0] h2
 );
 
     // Time display
     // h2 h1 m2 m1 
     reg [5:0] hour = 0, min = 0, sec = 0; // max is 60 2^6 = 64
-    integer clck = 0;
+    integer clkc = 0;
     localparam onesec = 100_000_00; // 1 second
 
     always @(posedge clk) begin
@@ -76,5 +76,5 @@ module DigitalClock (
     // To Convert binary BCD to number and display 
     BinaryToBcd second(.binary(sec), .thos(), .hund(), .tens(s2), .ones(s1));    
     BinaryToBcd minute(.binary(min), .thos(), .hund(), .tens(m2), .ones(m1));    
-    BinaryToBcd hour(.binary(hour), .thos(), .hund(), .tens(h2), .ones(h1));    
+    BinaryToBcd hourBinary(.binary(hour), .thos(), .hund(), .tens(h2), .ones(h1));    
 endmodule
