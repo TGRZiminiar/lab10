@@ -20,7 +20,7 @@ module DigitalClock (
         sec <= 6'd45;
     end
 
-    always @(posedge clk) begin
+    always @(trigger) begin
         if(sw == 1'b1) begin
             // reset everything to 0
             {hour, min, sec} <= 0;
