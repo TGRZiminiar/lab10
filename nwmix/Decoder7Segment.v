@@ -1,3 +1,4 @@
+`timescale 1ns / 1ps
 module Decoder7Segment(
     input [3:0] in,
     output reg [6:0] seg

@@ -1,3 +1,4 @@
+`timescale 1ns / 1ps
 module oneSecond(
     input clk,
     output clk_out,
@@ -6,7 +7,7 @@ module oneSecond(
 
     reg elapsed;
     reg [24:0] state;
-    localparam onesec = 100_000_00; // 1 second
+    localparam onesec = 50_000_000; // 1 second
 
     always @ (posedge clk) begin
         if (state == onesec) begin

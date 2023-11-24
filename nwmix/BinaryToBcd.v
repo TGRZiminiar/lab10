@@ -1,80 +1,39 @@
-module DigitalClock (
-    input clk, // clock with 1hz
-    input en,  // enable
-    input rst, // reset all of input and output
-    input hrup, // btn use to increment hour
-    input minup, // btn use to increment min
-    output [3:0] s1,
-    output [3:0] s2,
-    output [3:0] m1,
-    output [3:0] m2,
-    output [3:0] h1,
-    output [3:0] h2
+`timescale 1ns / 1ps
+// module BinaryToBcd (
+//     input [11:0] binary,
+//     output reg [3:0] thos,
+//     output reg [3:0] hund,
+//     output reg [3:0] tens,
+//     output reg [3:0] ones
+// );
+
+//     reg [11:0] bcd_data = 0;
+
+//     always @(binary) begin // 1250
+
+//         bcd_data = binary; // bcd_data = 1250
+//         thos = bcd_data / 1000; // 1250 / 1000 = 1, thos = 1
+//         bcd_data = bcd_data % 1000; // 1250 % 1000 = 250
+
+//         hund = bcd_data / 100; // 250 / 100 = 2
+//         bcd_data = bcd_data % 100; // 250 % 100 = 50
+
+//         tens = bcd_data / 10; // 50 / 10 = 5
+
+//         ones = bcd_data % 10; // 5 % 10 = 0
+
+//     end
+
+// endmodule
+module BinaryToBcd (
+    input [9:0] binary, // Changed the input width to 10 bits since you don't need thousands or hundreds place
+    output reg [3:0] tens,
+    output reg [3:0] ones
 );
 
-    // Time display
-    // h2 h1 m2 m1 
-    reg [5:0] hour = 0, min = 0, sec = 0; // max is 60 2^6 = 64
-    integer clkc = 0;
-    localparam onesec = 100_000_00; // 1 second
-
-    always @(posedge clk) begin
-        if(rst == 1'b1) begin
-            // reset everything to 0
-            {hour, min, sec} <= 0;
-        end
-
-        // set clock
-        // minute up btn on
-        else if(minup == 1'b1) begin
-            if(min == 6'd59) begin
-                min <= 0;
-            end
-            else begin
-                min <= min + 1'd1;
-            end
-        end
-        // hour up btn on
-        else if(hrup == 1'b1) begin
-            if(hour == 23) begin
-                hour <= 0;
-            end
-            else begin
-                hour <= hour + 1'd1;
-            end
-        end
-
-        // count 
-        else if (en == 1'b1) begin
-            if (clkc == onesec) begin
-                clkc <= 0;
-                if (sec == 6'd59) begin
-                    sec <= 0;
-                    if (min == 6'd59) begin
-                        min <= 0;
-                        if (hour == 6'd23) begin
-                            hour <= 0;
-                        end
-                        else begin
-                            hour <= hour + 1'd1;
-                        end
-                    end
-                    else begin
-                        min <= min + 1'd1;
-                    end
-                end
-                else begin
-                    sec <= sec + 1'd1;
-                end
-            end
-            else begin
-                clkc <= clkc + 1;
-            end
-        end
+    always @(binary) begin
+        tens = binary / 10;
+        ones = binary % 10;
     end
 
-    // To Convert binary BCD to number and display 
-    BinaryToBcd second(.binary(sec), .thos(), .hund(), .tens(s2), .ones(s1));    
-    BinaryToBcd minute(.binary(min), .thos(), .hund(), .tens(m2), .ones(m1));    
-    BinaryToBcd hourBinary(.binary(hour), .thos(), .hund(), .tens(h2), .ones(h1));    
 endmodule

@@ -1,3 +1,4 @@
+`timescale 1ns / 1ps
 module TopModule (
     input clk,
     input sw,
@@ -23,8 +24,17 @@ module TopModule (
         .seg(seg),
         .an(an)
     );
-
-
-
+    
+    DigitalClock makeTime(
+        .clk(clk),
+        .sw(sw),
+        .trigger(trigger),
+        .s1(s1),
+        .s2(s2),
+        .m1(m1),
+        .m2(m2),
+        .h1(h1),
+        .h2(h2)
+    );
 
 endmodule
