@@ -52,9 +52,9 @@ module DigitalClock (
     // BinaryToBcd second(.binary(sec), .thos(), .hund(), .tens(s2), .ones(s1));    
     // BinaryToBcd minute(.binary(min), .thos(), .hund(), .tens(m2), .ones(m1));    
     // BinaryToBcd hourBinary(.binary(hour), .thos(), .hund(), .tens(h2), .ones(h1));    
-    BinaryToBcd second(.binary(sec), .tens(s2), .ones(s1)); // Connect tens and ones to s2 and s1
-    BinaryToBcd minute(.binary(min), .tens(m2), .ones(m1)); // Connect tens and ones to m2 and m1
-    BinaryToBcd hourBinary(.binary(hour), .tens(h2), .ones(h1)); // Connect tens and ones to h2 and h1
+    BinaryToBcd absec(.binary(sec), .tens(s2), .ones(s1)); // Connect tens and ones to s2 and s1
+    BinaryToBcd abminute(.binary(min), .tens(m2), .ones(m1)); // Connect tens and ones to m2 and m1
+    BinaryToBcd abhour(.binary(hour), .tens(h2), .ones(h1)); // Connect tens and ones to h2 and h1
     
     
 endmodule

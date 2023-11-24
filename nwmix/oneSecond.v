@@ -2,7 +2,7 @@
 module oneSecond(
     input clk,
     output clk_out,
-    output [3:0] an
+    output reg [3:0] an
 );
 
     reg elapsed;
@@ -32,15 +32,15 @@ module oneSecond(
     always @(state) begin
         case (state[14])
         1'b0:
-            AN <= 4'b1110;
+            an <= 4'b1110;
         1'b1:
-            AN <= 4'b1101; 
+            an <= 4'b1101; 
         endcase
         case (state[15])
         1'b0:
-            AN <= 4'b1111;
+            an <= 4'b1111;
         1'b1:
-            AN <= 4'b1111; 
+            an <= 4'b1111; 
         endcase
     end
 

@@ -26,7 +26,7 @@
 
 // endmodule
 module BinaryToBcd (
-    input [9:0] binary, // Changed the input width to 10 bits since you don't need thousands or hundreds place
+    input [5:0] binary, // Changed the input width to 10 bits since you don't need thousands or hundreds place
     output reg [3:0] tens,
     output reg [3:0] ones
 );

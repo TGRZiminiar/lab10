@@ -3,12 +3,12 @@ module TopModule (
     input clk,
     input sw,
     output [6:0] seg, 
-    output reg [3:0] an
+    output [3:0] an
 );
     wire [3:0] s1, s2, m1, m2, h1, h2;
     wire trigger;
 
-    oneSecond triggerWhenOneSecond(
+    oneSecond asd(
         .clk(clk),
         .clk_out(trigger)
     );
