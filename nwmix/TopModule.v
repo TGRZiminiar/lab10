@@ -49,7 +49,7 @@ module TopModule (
         .ledD1(ledD1),
         .ledD2(ledD2),
         .ledD3(ledD3),
-        .ledD4(ledD4),
+        .ledD4(ledD4)
     );
 
     // BtnNumber btnHandler(
@@ -72,7 +72,7 @@ module TopModule (
     assign ledD2 = (pos == 2) ? 1'b1 : 1'b0;
     assign ledD3 = (pos == 3) ? 1'b1 : 1'b0;
     assign ledD4 = (pos == 4) ? 1'b1 : 1'b0;
-    
+
     assign led[0] = (s2 == 1) ? 1'b1 : 1'b0;
     assign led[1] = (s2 == 2) ? 1'b1 : 1'b0;
     assign led[2] = (s2 == 3) ? 1'b1 : 1'b0;

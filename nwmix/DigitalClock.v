@@ -36,7 +36,7 @@ module DigitalClock (
     localparam numberFive = 4'b0101;
     localparam numberNine = 4'b1001;
     
-    always @(posedge clk) begin
+    always @(posedge trigger) begin
         if(sw) begin
             h1 <= 4'b0000;
             h2 <= 4'b0000;
@@ -84,7 +84,12 @@ module DigitalClock (
         end
 
 
-        // Button Hanlder
+       
+
+    end
+
+    always @(posedge clk) begin
+         // Button Hanlder
         if(btnL) begin
             if(pos != 4) begin
                 pos = pos + 1;
@@ -101,7 +106,7 @@ module DigitalClock (
                 pos = 4;
             end
         end
-        
+
         else if(btnU) begin
             if(pos == 1) begin
                 m1 <= m1 + numberOne;
@@ -130,7 +135,6 @@ module DigitalClock (
                 h2 <= h2 - numberOne;
             end
         end
-
     end
 
    
