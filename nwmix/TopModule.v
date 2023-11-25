@@ -5,6 +5,7 @@ module TopModule (
     input btnC, btnU, btnL, btnR, btnD,
     output [6:0] seg, 
     output [3:0] an,
+    output ledD1, ledD2, ledD3, ledD4,
     output [5:0] led // display seconds
 
 );
@@ -40,8 +41,22 @@ module TopModule (
         .h2(h2)
     );
 
+    BtnNumber btnHandler(
+        .btnC(btnC)
+        .btnU(btnU)
+        .btnL(btnL)
+        .btnR(btnR)
+        .btnD(btnD)
+        .ledD1(ledD1)
+        .ledD2(ledD2)
+        .ledD3(ledD3)
+        .ledD4(ledD4)
+        .m1(m1)
+        .m2(m2)
+        .h1(h1)
+        .h2(h2)
+    )
 
-    
 
     assign led[0] = (s2 == 1) ? 1'b1 : 1'b0;
     assign led[1] = (s2 == 2) ? 1'b1 : 1'b0;
