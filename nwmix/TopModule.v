@@ -9,8 +9,8 @@ module TopModule (
     output [5:0] led // display seconds
 
 );
-    wire btnCclr, btnUclr, btnRclr, btnLclr, btnDclr;
-    reg btnCclr_prev, btnUclr_prev, btnRclr_prev, btnLclr_prev, btnDclr_prev;
+    // wire btnCclr, btnUclr, btnRclr, btnLclr, btnDclr;
+    // reg btnCclr_prev, btnUclr_prev, btnRclr_prev, btnLclr_prev, btnDclr_prev;
     wire [3:0] s1, s2, m1, m2, h1, h2;
     reg hrup, minup;
 
@@ -22,11 +22,11 @@ module TopModule (
         .clk_out(trigger)
     );
 
-    Debounce dbC(clk, btnC, btnCclr);   
-    Debounce dbL(clk, btnL, btnLclr);   
-    Debounce dbD(clk, btnD, btnDclr);   
-    Debounce dbU(clk, btnU, btnUclr); // hour up
-    Debounce dbR(clk, btnR, btnRclr); // min up
+    // Debounce dbC(clk, btnC, btnCclr);   
+    // Debounce dbL(clk, btnL, btnLclr);   
+    // Debounce dbD(clk, btnD, btnDclr);   
+    // Debounce dbU(clk, btnU, btnUclr); // hour up
+    // Debounce dbR(clk, btnR, btnRclr); // min up
 
     SevenSegDrive manage4digit(
         .clk(clk),
@@ -53,10 +53,12 @@ module TopModule (
         .pos(pos),
         .hrup(hrup),
         .minup(minup),
-        .btnLclr_prev(btnLclr_prev),
-        .btnLclr(btnLclr),
-        .btnRclr_prev(btnRclr_prev),
-        .btnRclr(btnRclr)
+        .btnL(btnL),
+        .btnR(btnR)
+        // .btnLclr_prev(btnLclr_prev),
+        // .btnLclr(btnLclr),
+        // .btnRclr_prev(btnRclr_prev),
+        // .btnRclr(btnRclr)
     );
 
     // always @(posedge clk) begin

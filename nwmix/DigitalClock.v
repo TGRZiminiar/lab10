@@ -12,10 +12,12 @@ module DigitalClock (
     output reg pos,
     output reg hrup, // btn use to increment hour
     output reg minup, // btn use to increment min
-    output reg btnLclr_prev,
-    input btnLclr,
-    output reg btnRclr_prev,
-    input btnRclr
+    input btnL, 
+    input btnR
+    // output reg btnLclr_prev,
+    // input btnLclr,
+    // output reg btnRclr_prev,
+    // input btnRclr
 );
 
     
@@ -37,13 +39,20 @@ module DigitalClock (
      always @(posedge clk) begin
 
 
-        btnLclr_prev <= btnLclr;
-        btnRclr_prev <= btnRclr;
-        if(btnLclr_prev == 1'b0 && btnLclr == 1'b1) hrup <= 1'b1;
-        else  hrup <= 0;
+        if(btnL) begin
+            hour <= hour + 1'd1;
+        end
+        if(btnR) begin
+            min <= min + 1'd1;
+        end
+        
+        // btnLclr_prev <= btnLclr;
+        // btnRclr_prev <= btnRclr;
+        // if(btnLclr_prev == 1'b0 && btnLclr == 1'b1) hrup <= 1'b1;
+        // else  hrup <= 0;
 
-        if(btnRclr_prev == 1'b0 && btnRclr == 1'b1) minup <= 1'b1;
-        else  minup <= 0;
+        // if(btnRclr_prev == 1'b0 && btnRclr == 1'b1) minup <= 1'b1;
+        // else  minup <= 0;
 
         if(sw == 1'b1) begin
             // reset everything to 0
