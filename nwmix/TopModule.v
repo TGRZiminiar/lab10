@@ -3,8 +3,8 @@ module TopModule (
     input clk,
     input sw,
     output [6:0] seg, 
-    output [3:0] an
-    input [7:0] led, // display seconds
+    output [3:0] an,
+    output [7:0] led // display seconds
 );
     wire [3:0] s1, s2, m1, m2, h1, h2;
     wire trigger;
@@ -38,7 +38,11 @@ module TopModule (
         .h2(h2)
     );
 
-    assign led[7:0] ={s2, s1};
-
+    assign led[0] = (s2 == 1) ? 1'b1 : 1'b0;
+    assign led[1] = (s2 == 2) ? 1'b1 : 1'b0;
+    assign led[2] = (s2 == 3) ? 1'b1 : 1'b0;
+    assign led[3] = (s2 == 4) ? 1'b1 : 1'b0;
+    assign led[4] = (s2 == 5) ? 1'b1 : 1'b0;
+    assign led[5] = (s2 == 6) ? 1'b1 : 1'b0;
 
 endmodule
