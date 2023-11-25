@@ -52,19 +52,23 @@ module TopModule (
         .h2(h2),
         .pos(pos),
         .hrup(hrup),
-        .minup(minup)
+        .minup(minup),
+        .btnLclr_prev(btnLclr_prev),
+        .btnLclr(btnLclr),
+        .btnRclr_prev(btnRclr_prev),
+        .btnRclr(btnRclr)
     );
 
-    always @(posedge clk) begin
-        btnLclr_prev <= btnLclr;
-        btnRclr_prev <= btnRclr;
-        if(btnLclr_prev == 1'b0 && btnLclr == 1'b1) hrup <= 1'b1;
-        else  hrup <= 0;
+    // always @(posedge clk) begin
+    //     btnLclr_prev <= btnLclr;
+    //     btnRclr_prev <= btnRclr;
+    //     if(btnLclr_prev == 1'b0 && btnLclr == 1'b1) hrup <= 1'b1;
+    //     else  hrup <= 0;
 
-        if(btnRclr_prev == 1'b0 && btnRclr == 1'b1) minup <= 1'b1;
-        else  minup <= 0;
+    //     if(btnRclr_prev == 1'b0 && btnRclr == 1'b1) minup <= 1'b1;
+    //     else  minup <= 0;
 
-    end
+    // end
 
     // BtnNumber btnHandler(
     //     .btnC(btnC),    
