@@ -10,8 +10,8 @@ module DigitalClock (
     output [3:0] h1,
     output [3:0] h2,
     output reg pos,
-    input btnC, btnU, btnL, btnR, btnD,
-    output ledD1, ledD2, ledD3, ledD4
+    input hrup, // btn use to increment hour
+    input minup // btn use to increment min
 );
 
     
