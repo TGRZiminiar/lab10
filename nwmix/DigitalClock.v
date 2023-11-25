@@ -14,17 +14,7 @@ module DigitalClock (
     output ledD1, ledD2, ledD3, ledD4
 );
 
-    initial begin
-        h2 <= 4'b0001; // 1
-        h1 <= 4'b0011; // 2
-        
-        m2 <= 4'b0100; // 3
-        m1 <= 4'b0101; // 0
-        
-        s2 <= 4'b0001; // 5
-        s1 <= 4'b0001; // 0
-
-    end
+    
     // 1  2  :  3  0  :  5  0
     // h2 h1 :  m2 m1 :  s2 s1
 
@@ -41,7 +31,7 @@ module DigitalClock (
     localparam onesec = 100_000_00; // 1 second
   
      always @(posedge clk) begin
-        if(rst == 1'b1) begin
+        if(sw == 1'b1) begin
             // reset everything to 0
             {hour, min, sec} <= 0;
         end
