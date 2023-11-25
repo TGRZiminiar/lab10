@@ -48,7 +48,7 @@ module DigitalClock (
 
         // set clock
         // minute up btn on
-        else if(minup == 1'b1) begin
+        else if(btnC == 1'b1) begin
             if(min == 6'd59) begin
                 min <= 0;
             end
@@ -57,7 +57,7 @@ module DigitalClock (
             end
         end
         // hour up btn on
-        else if(hrup == 1'b1) begin
+        else if(btnR == 1'b1) begin
             if(hour == 23) begin
                 hour <= 0;
             end
@@ -67,7 +67,7 @@ module DigitalClock (
         end
 
         // count 
-        else if (en == 1'b1) begin
+        else begin
             if (clkc == onesec) begin
                 clkc <= 0;
                 if (sec == 6'd59) begin
