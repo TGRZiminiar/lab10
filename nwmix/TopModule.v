@@ -4,7 +4,7 @@ module TopModule (
     input sw,
     output [6:0] seg, 
     output [3:0] an,
-    output [7:0] led // display seconds
+    output [5:0] led // display seconds
 );
     wire [3:0] s1, s2, m1, m2, h1, h2;
     wire trigger;
