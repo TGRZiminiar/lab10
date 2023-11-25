@@ -38,7 +38,7 @@ module DigitalClock (
 
         // set clock
         // minute up btn on
-        else if(btnC == 1'b1) begin
+        else if(btnL == 1'b1) begin
             if(min == 6'd59) begin
                 min <= 0;
             end

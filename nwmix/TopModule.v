@@ -9,6 +9,7 @@ module TopModule (
     output [5:0] led // display seconds
 
 );
+    wire btnCclr, btnUclr, btnRclr;
     wire [3:0] s1, s2, m1, m2, h1, h2;
     wire trigger;
     wire pos = 1;
@@ -17,6 +18,10 @@ module TopModule (
         .clk(clk),
         .clk_out(trigger)
     );
+
+    Debounce dbC(clk, btnC, btnCclr);   
+    Debounce dbU(clk, btnU, btnUclr); // hour up
+    Debounce dbR(clk, btnR, btnRclr); // min up
 
     SevenSegDrive manage4digit(
         .clk(clk),
