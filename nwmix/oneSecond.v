@@ -7,7 +7,8 @@ module oneSecond(
 
     reg elapsed;
     reg [27:0] state;
-    localparam onesec = 100000000; // 1 second
+    // localparam onesec = 100000000; // 1 second
+    localparam onesec = 50000000; // 0.5 second
 
     always @ (posedge clk) begin
         if (state == onesec) begin
