@@ -40,7 +40,7 @@ module DigitalClock (
         hour <= 6'd12;
         min <= 6'd58;
     end
-
+    reg btnL_prev, btnR_prev;
      always @(posedge clk) begin
 
 
@@ -60,8 +60,8 @@ module DigitalClock (
 
         // set clock
         // minute up btn on
-        else if(btnR == 1'b1) begin
-            if(min == 6'd59) begin
+        else if (btnR && !btnR_prev) begin
+            if (min == 6'd59) begin
                 min <= 0;
             end
             else begin
@@ -69,8 +69,8 @@ module DigitalClock (
             end
         end
         // hour up btn on
-        else if(btnL == 1'b1) begin
-            if(hour == 23) begin
+        else if (btnL && !btnL_prev) begin
+            if (hour == 23) begin
                 hour <= 0;
             end
             else begin
@@ -105,6 +105,10 @@ module DigitalClock (
                 clkc <= clkc + 1;
             end
         end
+        
+        btnL_prev <= btnL;
+        btnR_prev <= btnR;
+   
     end
 
     BinaryToBcd second(.binary(sec), .tens(s2), .ones(s1));    
