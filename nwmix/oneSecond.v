@@ -6,8 +6,8 @@ module oneSecond(
 );
 
     reg elapsed;
-    reg [24:0] state;
-    localparam onesec = 50_000_000; // 1 second
+    reg [27:0] state;
+    localparam onesec = 100000000; // 1 second
 
     always @ (posedge clk) begin
         if (state == onesec) begin
@@ -29,19 +29,19 @@ module oneSecond(
 
     assign clk_out = elapsed;
 
-    always @(state) begin
-        case (state[14])
-        1'b0:
-            an <= 4'b1110;
-        1'b1:
-            an <= 4'b1101; 
-        endcase
-        case (state[15])
-        1'b0:
-            an <= 4'b1111;
-        1'b1:
-            an <= 4'b1111; 
-        endcase
-    end
+    // always @(state) begin
+    //     case (state[14])
+    //     1'b0:
+    //         an <= 4'b1110;
+    //     1'b1:
+    //         an <= 4'b1101; 
+    //     endcase
+    //     case (state[15])
+    //     1'b0:
+    //         an <= 4'b1111;
+    //     1'b1:
+    //         an <= 4'b1111; 
+    //     endcase
+    // end
 
 endmodule
