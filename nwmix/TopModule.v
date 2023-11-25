@@ -11,7 +11,8 @@ module TopModule (
 );
     wire [3:0] s1, s2, m1, m2, h1, h2;
     wire trigger;
-
+    wire pos = 1;
+    
     oneSecond asd(
         .clk(clk),
         .clk_out(trigger)
@@ -38,26 +39,40 @@ module TopModule (
         .m1(m1),
         .m2(m2),
         .h1(h1),
-        .h2(h2)
+        .h2(h2),
+        .pos(pos),
+        .btnC(btnC),    
+        .btnU(btnU),
+        .btnL(btnL),
+        .btnR(btnR),
+        .btnD(btnD),
+        .ledD1(ledD1),
+        .ledD2(ledD2),
+        .ledD3(ledD3),
+        .ledD4(ledD4),
     );
 
-    BtnNumber btnHandler(
-        .btnC(btnC)
-        .btnU(btnU)
-        .btnL(btnL)
-        .btnR(btnR)
-        .btnD(btnD)
-        .ledD1(ledD1)
-        .ledD2(ledD2)
-        .ledD3(ledD3)
-        .ledD4(ledD4)
-        .m1(m1)
-        .m2(m2)
-        .h1(h1)
-        .h2(h2)
-    )
+    // BtnNumber btnHandler(
+    //     .btnC(btnC),    
+    //     .btnU(btnU),
+    //     .btnL(btnL),
+    //     .btnR(btnR),
+    //     .btnD(btnD),
+    //     .ledD1(ledD1),
+    //     .ledD2(ledD2),
+    //     .ledD3(ledD3),
+    //     .ledD4(ledD4),
+    //     .m1(m1),
+    //     .m2(m2),
+    //     .h1(h1),
+    //     .h2(h2)
+    // );
 
-
+    assign ledD1 = (pos == 1) ? 1'b1 : 1'b0;
+    assign ledD2 = (pos == 2) ? 1'b1 : 1'b0;
+    assign ledD3 = (pos == 3) ? 1'b1 : 1'b0;
+    assign ledD4 = (pos == 4) ? 1'b1 : 1'b0;
+    
     assign led[0] = (s2 == 1) ? 1'b1 : 1'b0;
     assign led[1] = (s2 == 2) ? 1'b1 : 1'b0;
     assign led[2] = (s2 == 3) ? 1'b1 : 1'b0;

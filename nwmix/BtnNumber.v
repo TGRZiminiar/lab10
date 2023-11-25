@@ -1,4 +1,4 @@
-module BunNumber (
+module BtqnNumber (
     input btnC, btnU, btnL, btnR, btnD,
     output ledD1, ledD2, ledD3, ledD4,
     output reg [3:0] m1,
@@ -42,11 +42,7 @@ module BunNumber (
         end
     end
 
-    assign ledD1 = (pos == 1) ? 1'b1 : 1'b0;
-    assign ledD2 = (pos == 2) ? 1'b1 : 1'b0;
-    assign ledD3 = (pos == 3) ? 1'b1 : 1'b0;
-    assign ledD4 = (pos == 4) ? 1'b1 : 1'b0;
-    localparam numberOne = 4'b0001;
+    
     always @(posedge segClk[12]) begin
         if(btnU) begin
             if(pos == 1) begin
