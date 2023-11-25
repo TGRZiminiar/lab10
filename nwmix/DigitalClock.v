@@ -39,59 +39,41 @@ module DigitalClock (
 
     always @(posedge trigger) begin
             // Update seconds
-            // if (s1 == 4'b1001 && s2 == 4'b0101) begin
-            //     s1 <= 4'b0000;
-            //     s2 <= 4'b0000;
+            if (s1 == 4'b1001 && s2 == 4'b0101) begin
+                s1 <= 4'b0000;
+                s2 <= 4'b0000;
 
-            //     // Update minutes
-            //     if (m1 == 4'b1001 && m2 == 4'b0101) begin
-            //         m1 <= 4'b0000;
-            //         m2 <= 4'b0000;
+                // Update minutes
+                if (m1 == 4'b1001 && m2 == 4'b0101) begin
+                    m1 <= 4'b0000;
+                    m2 <= 4'b0000;
 
-            //         // Update hours
-            //         if (h1 == 4'b0100 && h2 == 4'b0010) begin
-            //             h1 <= 4'b0000;
-            //             h2 <= 4'b0000;
-            //         end 
-            //         else if (h1 == 4'b1001) begin
-            //             h2 <= h2 + 4'b0001;
-            //             h1 <= 4'b0000;
-            //         end 
-            //         else if (h2 != 4'b0010) begin
-            //             h1 <= h1 + 4'b0001;
-            //         end
+                    // Update hours
+                    if (h1 == 4'b0100 && h2 == 4'b0010) begin
+                        h1 <= 4'b0000;
+                        h2 <= 4'b0000;
+                    end 
+                    else if (h1 == 4'b1001) begin
+                        h2 <= h2 + 4'b0001;
+                        h1 <= 4'b0000;
+                    end 
+                    else if (h2 != 4'b0010) begin
+                        h1 <= h1 + 4'b0001;
+                    end
 
-            //     end else if (m1 == 4'b1001) begin
-            //         m2 <= m2 + 4'b0001;
-            //         m1 <= 4'b0000;
-            //     end else begin
-            //         m1 <= m1 + 4'b0001;
-            //     end
-            // end 
-            // else if (s1 == 4'b1001) begin
-            //     s2 <= s2 + 4'b0001;
-            //     s1 <= 4'b0000;
-            // end 
-            // else begin
-            //     s1 <= s1 + 4'b0001;
-            // end
-                    // h1 != 9
-            else if (h1 != 4'b1001)
-                h1 <= h1 + 4'b0001;
-                // h1 += 1
-            
-            // if second == 5
-            // reset to 0
-            else if (h2 == 4'b0101) begin
-                h2 <= 4'b0000;
-                h1 = 4'b0000;
-            end
-            // h1 == 9
-            else if (h1 == 4'b1001) begin
-                // h2 += 1
-                h2 = h2 + 4'b0001;
-                // h1 = 0
-                h1 = 4'b0000;
+                end else if (m1 == 4'b1001) begin
+                    m2 <= m2 + 4'b0001;
+                    m1 <= 4'b0000;
+                end else begin
+                    m1 <= m1 + 4'b0001;
+                end
+            end 
+            else if (s1 == 4'b1001) begin
+                s2 <= s2 + 4'b0001;
+                s1 <= 4'b0000;
+            end 
+            else begin
+                s1 <= s1 + 4'b0001;
             end
     end
 
