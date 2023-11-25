@@ -35,16 +35,15 @@ module DigitalClock (
     reg [5:0] hour = 0, min = 0, sec = 0; // max is 60 2^6 = 64
     integer clkc = 0;
     localparam onesec = 100_000_00; // 1 second
-  
+    
+    initial begin
+        hour <= 6'd12;
+        min <= 6'd58;
+    end
+
      always @(posedge clk) begin
 
 
-        if(btnL) begin
-            hour <= hour + 1'd1;
-        end
-        if(btnR) begin
-            min <= min + 1'd1;
-        end
         
         // btnLclr_prev <= btnLclr;
         // btnRclr_prev <= btnRclr;
@@ -61,7 +60,7 @@ module DigitalClock (
 
         // set clock
         // minute up btn on
-        else if(minup == 1'b1) begin
+        else if(btnR == 1'b1) begin
             if(min == 6'd59) begin
                 min <= 0;
             end
@@ -70,7 +69,7 @@ module DigitalClock (
             end
         end
         // hour up btn on
-        else if(hrup == 1'b1) begin
+        else if(btnL == 1'b1) begin
             if(hour == 23) begin
                 hour <= 0;
             end

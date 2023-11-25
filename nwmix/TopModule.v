@@ -12,7 +12,7 @@ module TopModule (
     // wire btnCclr, btnUclr, btnRclr, btnLclr, btnDclr;
     // reg btnCclr_prev, btnUclr_prev, btnRclr_prev, btnLclr_prev, btnDclr_prev;
     wire [3:0] s1, s2, m1, m2, h1, h2;
-    reg hrup, minup;
+    wire hrup, minup;
 
     wire trigger;
     wire pos = 1;
