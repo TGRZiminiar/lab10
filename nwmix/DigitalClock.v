@@ -46,6 +46,7 @@ module DigitalClock (
     initial begin
         hour <= 6'd12;
         min <= 6'd58;
+        pos = 2;
     end
     always @(posedge clk) begin
         if(sw == 1'b1) begin
@@ -57,7 +58,6 @@ module DigitalClock (
             //Normal Clock
             CLOCK: begin
                 
-
                 if (btnL && !btnL_prev) begin
                     pos <= (pos == 1) ? 2 : 1;
                 end
