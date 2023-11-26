@@ -61,14 +61,20 @@ module DigitalClock (
         end
         
         if (btnR && !btnR_prev) begin
+            hour <= 6'd22;
+            min <= 6'd22;
             pos <= (pos == 1'b1) ? 1'b0 : 1'b1;
         end
         
         if(btnC && !btnC_prev) begin
+            hour <= 6'd33;
+            min <= 6'd33;
             currentMode <= (1'b0) ? 1'b1 : 1'b0;
         end
 
         if(swSubmitAlarm) begin
+            hour <= 6'd33;
+            min <= 6'd33;
             currentMode <= (1'b0) ? 1'b1 : 1'b0;
         end
     
