@@ -59,20 +59,10 @@ module DigitalClock (
                 
 
                 if (btnL && !btnL_prev) begin
-                    if (pos != 2) begin
-                        pos = pos + 1;
-                    end
-                    else begin
-                        pos = 1;
-                    end
+                    pos <= (pos == 1) ? 2 : 1;
                 end
                 else if (btnR && !btnR_prev) begin
-                    if (pos != 1) begin
-                        pos = pos - 1;
-                    end
-                    else begin
-                        pos = 2;
-                    end
+                    pos <= (pos == 2) ? 1 : 2;
                 end
 
                 if(pos == 1) begin
