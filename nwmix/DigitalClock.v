@@ -9,6 +9,7 @@ module DigitalClock (
     output [3:0] m2,
     output [3:0] h1,
     output [3:0] h2,
+    output reg currentMode, // intial value is CLOCK
     output reg pos, // intial value is 1
     output reg hrup, // btn use to increment hour
     output reg minup, // btn use to increment min
@@ -29,15 +30,15 @@ module DigitalClock (
     localparam numberFive = 4'b0101;
     localparam numberNine = 4'b1001;
     localparam onesec = 100_000_00; // 1 second
+    
+    localparam CLOCK = 1'b0;
+    localparam ALARM = 1'b1; 
 
     reg [5:0] hour = 0, min = 0, sec = 0; // max is 60 2^6 = 64
     reg [5:0] hourAlarm = 0, minAlarm = 0, secAlarm = 0; // max is 60 2^6 = 64
     reg btnL_prev, btnR_prev, btnC_prev, btnU_prev, btnD_prev;
     
     // 2 Mode = CLOCK, ALARM
-    localparam CLOCK = 1'b0;
-    localparam ALARM = 1'b1; 
-    reg currentMode;
     
 
     initial begin
@@ -64,7 +65,7 @@ module DigitalClock (
         end
         
         if(btnC && !btnC_prev) begin
-            currentMode <= (CLOCK) ? ALARM : CLOCK;
+            currentMode <= (1'b0) ? 1'b1 : 1'b0;
         end
     
 
@@ -236,8 +237,7 @@ module DigitalClock (
         btnR_prev <= btnR;
         btnU_prev <= btnU;
         btnD_prev <= btnD;
-        if (ledAlarmMode == ALARM) ledAlarmMode <= 1'b1;
-        else ledAlarmMode <= 1'b0;
+       
     end
 
     BinaryToBcd second(.binary(sec), .tens(s2), .ones(s1));    
