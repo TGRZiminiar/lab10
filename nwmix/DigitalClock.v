@@ -61,11 +61,11 @@ module DigitalClock (
                 if (btnL && !btnL_prev) begin
                     pos <= (pos == 1) ? 2 : 1;
                 end
-                else if (btnR && !btnR_prev) begin
+                if (btnR && !btnR_prev) begin
                     pos <= (pos == 2) ? 1 : 2;
                 end
 
-                if(pos == 1) begin
+                if(pos == 2) begin
                     if (btnU && !btnU_prev) begin
                         if (min == 6'd59) begin
                             min <= 0;
@@ -83,9 +83,10 @@ module DigitalClock (
                         end
                     end
                 end
-                else if(pos == 2) begin
+                
+                if(pos == 1) begin
                     if (btnU && !btnU_prev) begin
-                        if (hour == 6'd59) begin
+                        if (hour == 6'd24) begin
                             hour <= 0;
                         end
                         else begin

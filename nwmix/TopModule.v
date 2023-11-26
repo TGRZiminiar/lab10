@@ -93,9 +93,9 @@ module TopModule (
     // );
 
     assign ledD1 = (pos == 1) ? 1'b1 : 1'b0;
-    assign ledD2 = (pos == 2) ? 1'b1 : 1'b0;
-    // assign ledD3 = (pos == 3) ? 1'b1 : 1'b0;
-    // assign ledD4 = (pos == 4) ? 1'b1 : 1'b0;
+    //assign ledD2 = 
+    assign ledD3 =  (pos == 2) ? 1'b1 : 1'b0;
+    assign ledD4 =  1'b1;
 
     assign led[0] = (s2 == 1) ? 1'b1 : 1'b0;
     assign led[1] = (s2 == 2) ? 1'b1 : 1'b0;
