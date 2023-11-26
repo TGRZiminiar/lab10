@@ -15,6 +15,7 @@ module TopModule (
     wire hrup, minup;
 
     wire trigger;
+    // pos can be only 1 and 2, 1 is for hour, 2 is for minute
     wire pos = 1;
     
     oneSecond asd(
@@ -54,7 +55,10 @@ module TopModule (
         .hrup(hrup),
         .minup(minup),
         .btnL(btnL),
-        .btnR(btnR)
+        .btnR(btnR),
+        .btnC(btnC), 
+        .btnU(btnU),
+        .btnD(btnD),
         // .btnLclr_prev(btnLclr_prev),
         // .btnLclr(btnLclr),
         // .btnRclr_prev(btnRclr_prev),
@@ -88,8 +92,8 @@ module TopModule (
     //     .h2(h2)
     // );
 
-    // assign ledD1 = (pos == 1) ? 1'b1 : 1'b0;
-    // assign ledD2 = (pos == 2) ? 1'b1 : 1'b0;
+    assign ledD1 = (pos == 1) ? 1'b1 : 1'b0;
+    assign ledD2 = (pos == 2) ? 1'b1 : 1'b0;
     // assign ledD3 = (pos == 3) ? 1'b1 : 1'b0;
     // assign ledD4 = (pos == 4) ? 1'b1 : 1'b0;
 

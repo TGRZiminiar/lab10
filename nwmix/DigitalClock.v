@@ -9,11 +9,12 @@ module DigitalClock (
     output [3:0] m2,
     output [3:0] h1,
     output [3:0] h2,
-    output reg pos,
+    output reg pos, // intial value is 1
     output reg hrup, // btn use to increment hour
     output reg minup, // btn use to increment min
-    input btnL, 
-    input btnR
+    input btnC, btnU, btnL, btnR, btnD
+
+
     // output reg btnLclr_prev,
     // input btnLclr,
     // output reg btnRclr_prev,
@@ -24,6 +25,7 @@ module DigitalClock (
     // 1  2  :  3  0  :  5  0
     // h2 h1 :  m2 m1 :  s2 s1
 
+    integer clkc = 0;
     
     localparam zero = 4'b0000; // 0
     localparam numberOne = 4'b0001;
@@ -31,83 +33,122 @@ module DigitalClock (
     localparam numberFour  = 4'b0100;
     localparam numberFive = 4'b0101;
     localparam numberNine = 4'b1001;
-    
-    reg [5:0] hour = 0, min = 0, sec = 0; // max is 60 2^6 = 64
-    integer clkc = 0;
     localparam onesec = 100_000_00; // 1 second
+
+    reg [5:0] hour = 0, min = 0, sec = 0; // max is 60 2^6 = 64
+    reg btnL_prev, btnR_prev, btnC_prev, btnU_prev, btnD_prev;
     
+    // 2 Mode = CLOCK, ALARM
+    localparam currentMode = CLOCK;
+
     initial begin
         hour <= 6'd12;
         min <= 6'd58;
     end
-    reg btnL_prev, btnR_prev;
-     always @(posedge clk) begin
-
-
-        
-        // btnLclr_prev <= btnLclr;
-        // btnRclr_prev <= btnRclr;
-        // if(btnLclr_prev == 1'b0 && btnLclr == 1'b1) hrup <= 1'b1;
-        // else  hrup <= 0;
-
-        // if(btnRclr_prev == 1'b0 && btnRclr == 1'b1) minup <= 1'b1;
-        // else  minup <= 0;
-
+    always @(posedge clk) begin
         if(sw == 1'b1) begin
             // reset everything to 0
             {hour, min, sec} <= 0;
         end
 
-        // set clock
-        // minute up btn on
-        else if (btnR && !btnR_prev) begin
-            if (min == 6'd59) begin
-                min <= 0;
-            end
-            else begin
-                min <= min + 1'd1;
-            end
-        end
-        // hour up btn on
-        else if (btnL && !btnL_prev) begin
-            if (hour == 23) begin
-                hour <= 0;
-            end
-            else begin
-                hour <= hour + 1'd1;
-            end
-        end
+        case (currentMode)
+            //Normal Clock
+            CLOCK: begin
+                
 
-        // count 
-        else begin
-            if (clkc == onesec) begin
-                clkc <= 0;
-                if (sec == 6'd59) begin
-                    sec <= 0;
-                    if (min == 6'd59) begin
-                        min <= 0;
-                        if (hour == 6'd23) begin
+                if (btnL && !btnL_prev) begin
+                    if (pos != 2) begin
+                        pos = pos + 1;
+                    end
+                    else begin
+                        pos = 1;
+                    end
+                end
+                else if (btnR && !btnR_prev) begin
+                    if (pos != 1) begin
+                        pos = pos - 1;
+                    end
+                    else begin
+                        pos = 2;
+                    end
+                end
+
+                if(pos == 1) begin
+                    if (btnU && !btnU_prev) begin
+                        if (min == 6'd59) begin
+                            min <= 0;
+                        end
+                        else begin
+                            min <= min + 1'd1;
+                        end
+                    end
+                    else if(btnD && !btnD_prev) begin
+                        if (min == 6'd0) begin
+                            min <= 6'd59;
+                        end
+                        else begin
+                            min <= min - 1'd1;
+                        end
+                    end
+                end
+                else if(pos == 2) begin
+                    if (btnU && !btnU_prev) begin
+                        if (hour == 6'd59) begin
                             hour <= 0;
                         end
                         else begin
                             hour <= hour + 1'd1;
                         end
                     end
-                    else begin
-                        min <= min + 1'd1;
+                    else if(btnD && !btnD_prev) begin
+                        if (hour == 6'd0) begin
+                            hour <= 6'd59;
+                        end
+                        else begin
+                            hour <= hour - 1'd1;
+                        end
                     end
                 end
+
+                // count 
                 else begin
-                    sec <= sec + 1'd1;
+                    if (clkc == onesec) begin
+                        clkc <= 0;
+                        if (sec == 6'd59) begin
+                            sec <= 0;
+                            if (min == 6'd59) begin
+                                min <= 0;
+                                if (hour == 6'd23) begin
+                                    hour <= 0;
+                                end
+                                else begin
+                                    hour <= hour + 1'd1;
+                                end
+                            end
+                            else begin
+                                min <= min + 1'd1;
+                            end
+                        end
+                        else begin
+                            sec <= sec + 1'd1;
+                        end
+                    end
+                    else begin
+                        clkc <= clkc + 1;
+                    end
                 end
-            end
-            else begin
-                clkc <= clkc + 1;
-            end
-        end
+            end // end of CLOCK Mode
+
+
+                
+
+            default: 
+        endcase
         
         btnL_prev <= btnL;
         btnR_prev <= btnR;
+        btnU_prev <= btnU;
+        btnD_prev <= btnD;
    
     end
 
