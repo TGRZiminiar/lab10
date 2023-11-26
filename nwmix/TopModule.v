@@ -70,6 +70,7 @@ module TopModule (
     //assign ledD2 = 
     assign ledD3 = (pos == 1'b1) ? 1'b1 : 1'b0;
     assign ledAlarmMode = (currentMode == 1'b1) ? 1'b1 : 1'b0;
+    assign ledD2 = (currentMode == 1'b0) ? 1'b1 : 1'b0;
     //  if (ledAlarmMode == ALARM) ledAlarmMode <= 1'b1;
     //     else ledAlarmMode <= 1'b0;
 
@@ -77,7 +78,7 @@ module TopModule (
     assign led[1] = (s2 == 2) ? 1'b1 : 1'b0;
     assign led[2] = (s2 == 3) ? 1'b1 : 1'b0;
     assign led[3] = (s2 == 4) ? 1'b1 : 1'b0;
-    assign led[4] = (s2 == 5) ? 1'b1 : 1'b0;
+    assign led[4] = (s2 == 5 && s1 != 9) ? 1'b1 : 1'b0;
     assign led[5] = (s2 == 5 && s1 == 9) ? 1'b1 : 1'b0;
     
 

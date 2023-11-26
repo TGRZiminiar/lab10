@@ -67,6 +67,10 @@ module DigitalClock (
         if(btnC && !btnC_prev) begin
             currentMode <= (1'b0) ? 1'b1 : 1'b0;
         end
+
+        if(swSubmitAlarm) begin
+            currentMode <= CLOCK;
+        end
     
 
         case (currentMode)
