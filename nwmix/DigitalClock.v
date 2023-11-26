@@ -42,31 +42,38 @@ module DigitalClock (
     parameter CLOCK = 1'b0;
     parameter ALARM = 1'b1; 
     localparam currentMode = CLOCK;
+    reg tempPos;
 
     initial begin
         hour <= 6'd12;
         min <= 6'd58;
         pos = 2;
+        tempPos = 1;
     end
+
+    
+
     always @(posedge clk) begin
         if(sw == 1'b1) begin
             // reset everything to 0
             {hour, min, sec} <= 0;
         end
 
+        if (btnL && !btnL_prev) begin
+            tempPos <= (tempPos == 1) ? 2 : 1;
+        end
+        if (btnR && !btnR_prev) begin
+            tempPos <= (tempPos == 2) ? 1 : 2;
+        end
+
+
         case (currentMode)
             //Normal Clock
             CLOCK: begin
                 
-                if (btnL && !btnL_prev) begin
-                    pos <= (pos == 1) ? 2 : 1;
-                end
-                if (btnR && !btnR_prev) begin
-                    pos <= (pos == 2) ? 1 : 2;
-                end
-
-                if(pos == 2) begin
-                    if (btnU && !btnU_prev) begin
+               
+                if(tempPos == 1) begin
+                    if (btnU && !btnU_prev) begin   
                         if (min == 6'd59) begin
                             min <= 0;
                         end
@@ -84,7 +91,7 @@ module DigitalClock (
                     end
                 end
                 
-                if(pos == 1) begin
+                if(tempPos == 2) begin
                     if (btnU && !btnU_prev) begin
                         if (hour == 6'd24) begin
                             hour <= 0;
