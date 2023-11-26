@@ -42,13 +42,13 @@ module DigitalClock (
     parameter CLOCK = 1'b0;
     parameter ALARM = 1'b1; 
     localparam currentMode = CLOCK;
-    reg tempPos;
 
     initial begin
         hour <= 6'd12;
         min <= 6'd58;
         pos = 2;
         tempPos = 1;
+        
     end
 
     
@@ -60,10 +60,10 @@ module DigitalClock (
         end
 
         if (btnL && !btnL_prev) begin
-            tempPos <= (tempPos == 1) ? 2 : 1;
+            pos <= (pos == 1'b0) ? 1'b1 : 1'b0;
         end
         if (btnR && !btnR_prev) begin
-            tempPos <= (tempPos == 2) ? 1 : 2;
+            pos <= (pos == 1'b1) ? 1'b0 : 1'b1;
         end
 
 
@@ -71,46 +71,65 @@ module DigitalClock (
             //Normal Clock
             CLOCK: begin
                 
-               
-                if(tempPos == 1) begin
-                    if (btnU && !btnU_prev) begin   
-                        if (min == 6'd59) begin
-                            min <= 0;
+                case (pos)
+                    1'b0: begin
+                        if (btnU && !btnU_prev) begin   
+                            if (min == 6'd59) begin
+                                min <= 0;
+                            end
+                            else begin
+                                min <= min + 1'd1;
+                            end
                         end
-                        else begin
-                            min <= min + 1'd1;
-                        end
-                    end
-                    else if(btnD && !btnD_prev) begin
-                        if (min == 6'd0) begin
-                            min <= 6'd59;
-                        end
-                        else begin
-                            min <= min - 1'd1;
-                        end
-                    end
-                end
-                
-                if(tempPos == 2) begin
-                    if (btnU && !btnU_prev) begin
-                        if (hour == 6'd24) begin
-                            hour <= 0;
-                        end
-                        else begin
-                            hour <= hour + 1'd1;
+                        else if(btnD && !btnD_prev) begin
+                            if (min == 6'd0) begin
+                                min <= 6'd59;
+                            end
+                            else begin
+                                min <= min - 1'd1;
+                            end
                         end
                     end
-                    else if(btnD && !btnD_prev) begin
-                        if (hour == 6'd0) begin
-                            hour <= 6'd59;
-                        end
-                        else begin
-                            hour <= hour - 1'd1;
-                        end
-                    end
-                end
 
-               
+                    1'b1: begin
+                        if (btnU && !btnU_prev) begin
+                            if (hour == 6'd24) begin
+                                hour <= 0;
+                            end
+                            else begin
+                                hour <= hour + 1'd1;
+                            end
+                        end
+                        else if(btnD && !btnD_prev) begin
+                            if (hour == 6'd0) begin
+                                hour <= 6'd59;
+                            end
+                            else begin
+                                hour <= hour - 1'd1;
+                            end
+                        end
+                    end 
+                    default: begin
+                        if (btnU && !btnU_prev) begin
+                            if (hour == 6'd24) begin
+                                hour <= 0;
+                            end
+                            else begin
+                                hour <= hour + 1'd1;
+                            end
+                        end
+                        else if(btnD && !btnD_prev) begin
+                            if (hour == 6'd0) begin
+                                hour <= 6'd59;
+                            end
+                            else begin
+                                hour <= hour - 1'd1;
+                            end
+                        end
+                    end
+                endcase
+         
+        
                     if (clkc == onesec) begin
                         clkc <= 0;
                         if (sec == 6'd59) begin
