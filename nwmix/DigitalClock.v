@@ -1,7 +1,7 @@
 `timescale 1ns / 1ps
 module DigitalClock (
     input clk,
-    input sw,
+    input sw, swClearAlarm, swSubmitAlarm,
     input trigger,
     output [3:0] s1,
     output [3:0] s2,
@@ -12,13 +12,8 @@ module DigitalClock (
     output reg pos, // intial value is 1
     output reg hrup, // btn use to increment hour
     output reg minup, // btn use to increment min
-    input btnC, btnU, btnL, btnR, btnD
-
-
-    // output reg btnLclr_prev,
-    // input btnLclr,
-    // output reg btnRclr_prev,
-    // input btnRclr
+    input btnC, btnU, btnL, btnR, btnD,
+    output reg ledAlarmMode, ledTimeAlarm
 );
 
     
@@ -36,6 +31,7 @@ module DigitalClock (
     localparam onesec = 100_000_00; // 1 second
 
     reg [5:0] hour = 0, min = 0, sec = 0; // max is 60 2^6 = 64
+    reg [5:0] hourAlarm = 0, minAlarm = 0, secAlarm = 0; // max is 60 2^6 = 64
     reg btnL_prev, btnR_prev, btnC_prev, btnU_prev, btnD_prev;
     
     // 2 Mode = CLOCK, ALARM
@@ -47,7 +43,6 @@ module DigitalClock (
         hour <= 6'd12;
         min <= 6'd58;
         pos = 2;
-        tempPos = 1;
         
     end
 
@@ -62,10 +57,13 @@ module DigitalClock (
         if (btnL && !btnL_prev) begin
             pos <= (pos == 1'b0) ? 1'b1 : 1'b0;
         end
-        if (btnR && !btnR_prev) begin
+        else if (btnR && !btnR_prev) begin
             pos <= (pos == 1'b1) ? 1'b0 : 1'b1;
         end
-
+        else if(btnC && !btnC_prev) begin
+            currentMode == CLOCK ? ALARM : CLOCK;
+        end
+    
 
         case (currentMode)
             //Normal Clock
@@ -128,40 +126,114 @@ module DigitalClock (
                         end
                     end
                 endcase
-         
-        
-                    if (clkc == onesec) begin
-                        clkc <= 0;
-                        if (sec == 6'd59) begin
-                            sec <= 0;
-                            if (min == 6'd59) begin
-                                min <= 0;
-                                if (hour == 6'd23) begin
-                                    hour <= 0;
-                                end
-                                else begin
-                                    hour <= hour + 1'd1;
-                                end
+
+                if(hour == hourAlarm && min == minAlarm) ledTimeAlarm >= 1'b1;
+                else ledTimeAlarm >= 1'b0;
+
+                // 24 Hour Clock Code 
+                if (clkc == onesec) begin
+                    clkc <= 0;
+                    if (sec == 6'd59) begin
+                        sec <= 0;
+                        if (min == 6'd59) begin
+                            min <= 0;
+                            if (hour == 6'd23) begin
+                                hour <= 0;
                             end
                             else begin
-                                min <= min + 1'd1;
+                                hour <= hour + 1'd1;
                             end
                         end
                         else begin
-                            sec <= sec + 1'd1;
+                            min <= min + 1'd1;
                         end
                     end
                     else begin
-                        clkc <= clkc + 1;
+                        sec <= sec + 1'd1;
                     end
+                end
+                else begin
+                    clkc <= clkc + 1;
+                end
             end // end of CLOCK Mode
+
+
+            //Alarm Clock
+            ALARM: begin
+                hourAlarm >= hour;
+                minAlarm >= min;
+                case (pos)
+                    1'b0: begin
+                        if (btnU && !btnU_prev) begin   
+                            if (minAlarm == 6'd59) begin
+                                minAlarm <= 0;
+                            end
+                            else begin
+                                minAlarm <= minAlarm + 1'd1;
+                            end
+                        end
+                        else if(btnD && !btnD_prev) begin
+                            if (minAlarm == 6'd0) begin
+                                minAlarm <= 6'd59;
+                            end
+                            else begin
+                                minAlarm <= minAlarm - 1'd1;
+                            end
+                        end
+                    end
+
+                    1'b1: begin
+                        if (btnU && !btnU_prev) begin
+                            if (hourAlarm == 6'd24) begin
+                                hourAlarm <= 0;
+                            end
+                            else begin
+                                hourAlarm <= hourAlarm + 1'd1;
+                            end
+                        end
+                        else if(btnD && !btnD_prev) begin
+                            if (hourAlarm == 6'd0) begin
+                                hourAlarm <= 6'd59;
+                            end
+                            else begin
+                                hourAlarm <= hourAlarm - 1'd1;
+                            end
+                        end
+                    end 
+                    default: begin
+                        if (btnU && !btnU_prev) begin
+                            if (hourAlarm == 6'd24) begin
+                                hourAlarm <= 0;
+                            end
+                            else begin
+                                hourAlarm <= hourAlarm + 1'd1;
+                            end
+                        end
+                        else if(btnD && !btnD_prev) begin
+                            if (hourAlarm == 6'd0) begin
+                                hourAlarm <= 6'd59;
+                            end
+                            else begin
+                                hourAlarm <= hourAlarm - 1'd1;
+                            end
+                        end
+                    end
+                endcase
+
+                if(swSubmitAlarm) begin
+                    currentMode = CLOCK;
+                end
+
+            end
+
         endcase
         
+        btnC_prev <= btnC;
         btnL_prev <= btnL;
         btnR_prev <= btnR;
         btnU_prev <= btnU;
         btnD_prev <= btnD;
-   
+        ledAlarmMode <= currentMode == ALARM ? 1'b1 : 1'b0;
     end
 
     BinaryToBcd second(.binary(sec), .tens(s2), .ones(s1));    

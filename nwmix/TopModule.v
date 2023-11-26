@@ -1,18 +1,17 @@
 `timescale 1ns / 1ps
 module TopModule (
     input clk,
-    input sw,
+    input sw, swClearAlarm, swSubmitAlarm,
     input btnC, btnU, btnL, btnR, btnD,
     output [6:0] seg, 
     output [3:0] an,
-    output ledD1, ledD2, ledD3, ledD4,
+    output ledD1, ledD2, ledD3, ledTimeAlarm, ledAlarmMode,
     output [5:0] led // display seconds
 
 );
     // wire btnCclr, btnUclr, btnRclr, btnLclr, btnDclr;
     // reg btnCclr_prev, btnUclr_prev, btnRclr_prev, btnLclr_prev, btnDclr_prev;
     wire [3:0] s1, s2, m1, m2, h1, h2;
-    wire hrup, minup;
 
     wire trigger;
     // pos can be only 1 and 2, 1 is for hour, 2 is for minute
@@ -52,50 +51,24 @@ module TopModule (
         .h1(h1),
         .h2(h2),
         .pos(pos),
-        .hrup(hrup),
-        .minup(minup),
         .btnL(btnL),
         .btnR(btnR),
         .btnC(btnC), 
         .btnU(btnU),
-        .btnD(btnD)
+        .btnD(btnD),
+        .ledTimeAlarm(ledTimeAlarm),
+        .ledAlarmMode(ledAlarmMode),
+        .swClearAlarm(swClearAlarm),
+        .swSubmitAlarm(swSubmitAlarm)
         // .btnLclr_prev(btnLclr_prev),
         // .btnLclr(btnLclr),
         // .btnRclr_prev(btnRclr_prev),
         // .btnRclr(btnRclr)
     );
 
-    // always @(posedge clk) begin
-    //     btnLclr_prev <= btnLclr;
-    //     btnRclr_prev <= btnRclr;
-    //     if(btnLclr_prev == 1'b0 && btnLclr == 1'b1) hrup <= 1'b1;
-    //     else  hrup <= 0;
-
-    //     if(btnRclr_prev == 1'b0 && btnRclr == 1'b1) minup <= 1'b1;
-    //     else  minup <= 0;
-
-    // end
-
-    // BtnNumber btnHandler(
-    //     .btnC(btnC),    
-    //     .btnU(btnU),
-    //     .btnL(btnL),
-    //     .btnR(btnR),
-    //     .btnD(btnD),
-    //     .ledD1(ledD1),
-    //     .ledD2(ledD2),
-    //     .ledD3(ledD3),
-    //     .ledD4(ledD4),
-    //     .m1(m1),
-    //     .m2(m2),
-    //     .h1(h1),
-    //     .h2(h2)
-    // );
-
     assign ledD1 = (pos == 1'b0) ? 1'b1 : 1'b0;
     //assign ledD2 = 
-    assign ledD3 =  (pos == 1'b1) ? 1'b1 : 1'b0;
-    assign ledD4 =  1'b1;
+    assign ledD3 = (pos == 1'b1) ? 1'b1 : 1'b0;
 
     assign led[0] = (s2 == 1) ? 1'b1 : 1'b0;
     assign led[1] = (s2 == 2) ? 1'b1 : 1'b0;
