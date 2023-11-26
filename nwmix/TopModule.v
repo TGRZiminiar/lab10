@@ -16,7 +16,7 @@ module TopModule (
 
     wire trigger;
     // pos can be only 1 and 2, 1 is for hour, 2 is for minute
-    wire pos = 1;
+    wire pos;
     
     oneSecond asd(
         .clk(clk),
@@ -58,7 +58,7 @@ module TopModule (
         .btnR(btnR),
         .btnC(btnC), 
         .btnU(btnU),
-        .btnD(btnD),
+        .btnD(btnD)
         // .btnLclr_prev(btnLclr_prev),
         // .btnLclr(btnLclr),
         // .btnRclr_prev(btnRclr_prev),

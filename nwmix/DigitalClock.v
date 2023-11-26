@@ -112,8 +112,7 @@ module DigitalClock (
                     end
                 end
 
-                // count 
-                else begin
+               
                     if (clkc == onesec) begin
                         clkc <= 0;
                         if (sec == 6'd59) begin
@@ -138,13 +137,7 @@ module DigitalClock (
                     else begin
                         clkc <= clkc + 1;
                     end
-                end
             end // end of CLOCK Mode
-
-
-                
-
-            default: 
         endcase
         
         btnL_prev <= btnL;
