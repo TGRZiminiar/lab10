@@ -242,9 +242,16 @@ module DigitalClock (
        
     end
 
-    BinaryToBcd second(.binary(sec), .tens(s2), .ones(s1));    
-    BinaryToBcd minute(.binary(min), .tens(m2), .ones(m1));    
-    BinaryToBcd hourBinary(.binary(hour), .tens(h2), .ones(h1));    
+    if (currentMode == CLOCK) begin
+        BinaryToBcd second(.binary(sec), .tens(s2), .ones(s1));    
+        BinaryToBcd minute(.binary(min), .tens(m2), .ones(m1));    
+        BinaryToBcd hourBinary(.binary(hour), .tens(h2), .ones(h1));    
+    end
+    else begin
+        BinaryToBcd second(.binary(secAlarm), .tens(s2), .ones(s1));    
+        BinaryToBcd minute(.binary(minAlarm), .tens(m2), .ones(m1));    
+        BinaryToBcd hourBinary(.binary(hourAlarm), .tens(h2), .ones(h1));    
+    end
 
 
     
