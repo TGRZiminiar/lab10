@@ -57,7 +57,7 @@ module TopModule (
         .btnC(btnC), 
         .btnU(btnU),
         .btnL(btnL),
-        .btnR(btnR),ß
+        .btnR(btnR),
         .btnD(btnD),
         .ledAlarmMode(ledAlarmMode),
         .ledTimeAlarm(ledTimeAlarm)
