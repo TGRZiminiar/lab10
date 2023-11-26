@@ -37,13 +37,14 @@ module DigitalClock (
     // 2 Mode = CLOCK, ALARM
     parameter CLOCK = 1'b0;
     parameter ALARM = 1'b1; 
-    localparam currentMode = CLOCK;
+    reg currentMode;
+    
 
     initial begin
         hour <= 6'd12;
         min <= 6'd58;
         pos = 2;
-        
+        currentMode <= CLOCK;    
     end
 
     
@@ -61,7 +62,7 @@ module DigitalClock (
             pos <= (pos == 1'b1) ? 1'b0 : 1'b1;
         end
         else if(btnC && !btnC_prev) begin
-            currentMode == CLOCK ? ALARM : CLOCK;
+            currentMode = CLOCK ? ALARM : CLOCK;
         end
     
 
@@ -127,8 +128,8 @@ module DigitalClock (
                     end
                 endcase
 
-                if(hour == hourAlarm && min == minAlarm) ledTimeAlarm >= 1'b1;
-                else ledTimeAlarm >= 1'b0;
+                if(hour == hourAlarm && min == minAlarm) ledTimeAlarm = 1'b1;
+                else ledTimeAlarm = 1'b0;
 
                 // 24 Hour Clock Code 
                 if (clkc == onesec) begin
@@ -160,8 +161,8 @@ module DigitalClock (
 
             //Alarm Clock
             ALARM: begin
-                hourAlarm >= hour;
-                minAlarm >= min;
+                hourAlarm = hour;
+                minAlarm = min;
                 case (pos)
                     1'b0: begin
                         if (btnU && !btnU_prev) begin   
@@ -233,7 +234,7 @@ module DigitalClock (
         btnR_prev <= btnR;
         btnU_prev <= btnU;
         btnD_prev <= btnD;
-        ledAlarmMode <= currentMode == ALARM ? 1'b1 : 1'b0;
+        ledAlarmMode = currentMode == ALARM ? 1'b1 : 1'b0;
     end
 
     BinaryToBcd second(.binary(sec), .tens(s2), .ones(s1));    
