@@ -9,10 +9,8 @@ module DigitalClock (
     output [3:0] m2,
     output [3:0] h1,
     output [3:0] h2,
-    output reg currentMode, // intial value is CLOCK
     output reg pos, // intial value is 1
-    output reg hrup, // btn use to increment hour
-    output reg minup, // btn use to increment min
+    output reg currentMode, // intial value is CLOCK
     input btnC, btnU, btnL, btnR, btnD,
     output reg ledAlarmMode, ledTimeAlarm
 );
@@ -69,13 +67,13 @@ module DigitalClock (
         if(btnC && !btnC_prev) begin
             hour <= 6'd33;
             min <= 6'd33;
-            currentMode <= (1'b0) ? 1'b1 : 1'b0;
+            currentMode <= (currentMode == 1'b0) ? 1'b1 : 1'b0;
         end
 
         if(swSubmitAlarm) begin
             hour <= 6'd33;
             min <= 6'd33;
-            currentMode <= (1'b0) ? 1'b1 : 1'b0;
+            currentMode <= (currentMode == 1'b0) ? 1'b1 : 1'b0;
         end
     
 

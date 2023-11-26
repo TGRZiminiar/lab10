@@ -43,6 +43,8 @@ module TopModule (
     DigitalClock makeTime(
         .clk(clk),
         .sw(sw),
+        .swClearAlarm(swClearAlarm),
+        .swSubmitAlarm(swSubmitAlarm),
         .trigger(trigger),
         .s1(s1),
         .s2(s2),
@@ -51,16 +53,14 @@ module TopModule (
         .h1(h1),
         .h2(h2),
         .pos(pos),
-        .btnL(btnL),
-        .btnR(btnR),
+        .currentMode(currentMode),
         .btnC(btnC), 
         .btnU(btnU),
+        .btnL(btnL),
+        .btnR(btnR),ß
         .btnD(btnD),
-        .currentMode(currentMode),
-        .ledTimeAlarm(ledTimeAlarm),
         .ledAlarmMode(ledAlarmMode),
-        .swClearAlarm(swClearAlarm),
-        .swSubmitAlarm(swSubmitAlarm)
+        .ledTimeAlarm(ledTimeAlarm)
         // .btnLclr_prev(btnLclr_prev),
         // .btnLclr(btnLclr),
         // .btnRclr_prev(btnRclr_prev),
