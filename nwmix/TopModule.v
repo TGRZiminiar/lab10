@@ -56,6 +56,7 @@ module TopModule (
         .btnC(btnC), 
         .btnU(btnU),
         .btnD(btnD),
+        .currentMode(currentMode),
         .ledTimeAlarm(ledTimeAlarm),
         .ledAlarmMode(ledAlarmMode),
         .swClearAlarm(swClearAlarm),
