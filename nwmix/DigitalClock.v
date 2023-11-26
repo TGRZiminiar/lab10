@@ -35,16 +35,16 @@ module DigitalClock (
     reg btnL_prev, btnR_prev, btnC_prev, btnU_prev, btnD_prev;
     
     // 2 Mode = CLOCK, ALARM
-    parameter CLOCK = 1'b0;
-    parameter ALARM = 1'b1; 
+    localparam CLOCK = 1'b0;
+    localparam ALARM = 1'b1; 
     reg currentMode;
     
 
     initial begin
         hour <= 6'd12;
         min <= 6'd58;
-        pos = 2;
-        currentMode <= CLOCK;    
+        pos = 1'b0;
+        currentMode = CLOCK;    
     end
 
     
@@ -58,11 +58,13 @@ module DigitalClock (
         if (btnL && !btnL_prev) begin
             pos <= (pos == 1'b0) ? 1'b1 : 1'b0;
         end
-        else if (btnR && !btnR_prev) begin
+        
+        if (btnR && !btnR_prev) begin
             pos <= (pos == 1'b1) ? 1'b0 : 1'b1;
         end
-        else if(btnC && !btnC_prev) begin
-            currentMode = CLOCK ? ALARM : CLOCK;
+        
+        if(btnC && !btnC_prev) begin
+            currentMode <= (CLOCK) ? ALARM : CLOCK;
         end
     
 
@@ -222,7 +224,7 @@ module DigitalClock (
                 endcase
 
                 if(swSubmitAlarm) begin
-                    currentMode = CLOCK;
+                    currentMode <= CLOCK;
                 end
 
             end
@@ -234,7 +236,8 @@ module DigitalClock (
         btnR_prev <= btnR;
         btnU_prev <= btnU;
         btnD_prev <= btnD;
-        ledAlarmMode = currentMode == ALARM ? 1'b1 : 1'b0;
+        if (ledAlarmMode == ALARM) ledAlarmMode <= 1'b1;
+        else ledAlarmMode <= 1'b0;
     end
 
     BinaryToBcd second(.binary(sec), .tens(s2), .ones(s1));    
