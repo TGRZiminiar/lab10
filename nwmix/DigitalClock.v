@@ -39,6 +39,8 @@ module DigitalClock (
     reg btnL_prev, btnR_prev, btnC_prev, btnU_prev, btnD_prev;
     
     // 2 Mode = CLOCK, ALARM
+    parameter CLOCK = 1'b0;
+    parameter ALARM = 1'b1; 
     localparam currentMode = CLOCK;
 
     initial begin
