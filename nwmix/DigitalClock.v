@@ -53,6 +53,9 @@ module DigitalClock (
             // reset everything to 0
             {hour, min, sec} <= 0;
         end
+        if(swClearAlarm == 1'b1) begin
+            {hourAlarm, minAlarm} <= 0;
+        end
 
         if (btnL && !btnL_prev) begin
             pos <= (pos == 1'b0) ? 1'b1 : 1'b0;
