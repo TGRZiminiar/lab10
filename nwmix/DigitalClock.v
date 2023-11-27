@@ -63,11 +63,12 @@ module DigitalClock (
         end
         
         else if(swPostPoneAlarm == 1'b0 && btnC && !btnC_prev) begin
-            currentMode <= (currentMode == 1'b0) ? 1'b1 : 1'b0;
+            currentMode <= (currentMode == CLOCK) ? ALARM : CLOCK;
         end
 
         else if(swPostPoneAlarm == 1'b1 && btnC && !btnC_prev) begin
             minAlarm <= minAlarm + 1'd1;
+            currentMode <= ALARM;
         end
 
         //if(swPostPoneAlarm) begin
