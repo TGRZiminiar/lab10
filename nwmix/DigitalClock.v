@@ -171,8 +171,14 @@ module DigitalClock (
 
             //Alarm Clock
             ALARM: begin
-                //hourAlarm = hour;
-                //minAlarm = min;
+                
+                if (hourAlarm == 6'd23) begin
+                    hourAlarm <= 0;
+                end
+                if (minAlarm == 6'd59) begin
+                    minAlarm <= 0;
+                end
+
                 case (pos)
                     1'b0: begin
                         if (btnU && !btnU_prev) begin   
