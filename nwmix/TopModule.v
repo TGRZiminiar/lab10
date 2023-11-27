@@ -22,11 +22,11 @@ module TopModule (
         .clk_out(trigger)
     );
 
-    // Debounce dbC(clk, btnC, btnCclr);   
-    // Debounce dbL(clk, btnL, btnLclr);   
-    // Debounce dbD(clk, btnD, btnDclr);   
-    // Debounce dbU(clk, btnU, btnUclr); // hour up
-    // Debounce dbR(clk, btnR, btnRclr); // min up
+    Debounce dbC(clk, btnC, btnCclr);   
+    Debounce dbL(clk, btnL, btnLclr);   
+    Debounce dbD(clk, btnD, btnDclr);   
+    Debounce dbU(clk, btnU, btnUclr); 
+    Debounce dbR(clk, btnR, btnRclr); // min up
 
     SevenSegDrive manage4digit(
         .clk(clk),
