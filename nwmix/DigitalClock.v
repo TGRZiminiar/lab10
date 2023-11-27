@@ -133,7 +133,7 @@ module DigitalClock (
                 endcase
 
                 if(swPostPoneAlarm) begin
-                    minAlarm <= minAlarm + 6'd05;
+                    minAlarm <= minAlarm + 1'd1;
                 end
                
                 if(hour == hourAlarm && min == minAlarm) ledTimeAlarm = 1'b1;
