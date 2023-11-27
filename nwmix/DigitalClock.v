@@ -1,7 +1,7 @@
 `timescale 1ns / 1ps
 module DigitalClock (
     input clk,
-    input sw, swClearAlarm, swSubmitAlarm,
+    input sw, swClearAlarm, swPostPoneAlarm,
     input trigger,
     output [3:0] s1,
     output [3:0] s2,
@@ -47,7 +47,6 @@ module DigitalClock (
     end
 
     
-
     always @(posedge clk) begin
         if(sw == 1'b1) begin
             // reset everything to 0
@@ -66,7 +65,7 @@ module DigitalClock (
             currentMode <= (currentMode == 1'b0) ? 1'b1 : 1'b0;
         end
 
-        //if(swSubmitAlarm) begin
+        //if(swPostPoneAlarm) begin
             //currentMode <= (currentMode == 1'b0) ? 1'b1 : 1'b0;
         //end
     
@@ -133,8 +132,14 @@ module DigitalClock (
                     end
                 endcase
 
+                if(swPostPoneAlarm) begin
+                    minAlarm >= minAlarm + 6'd5;
+                end
+               
                 if(hour == hourAlarm && min == minAlarm) ledTimeAlarm = 1'b1;
                 else ledTimeAlarm = 1'b0;
+
+               
 
                 // 24 Hour Clock Code 
                 if (clkc == onesec) begin
@@ -226,9 +231,7 @@ module DigitalClock (
                     end
                 endcase
 
-                if(swSubmitAlarm) begin
-                    currentMode <= CLOCK;
-                end
+                
 
             end
 

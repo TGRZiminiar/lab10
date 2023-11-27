@@ -1,7 +1,7 @@
 `timescale 1ns / 1ps
 module TopModule (
     input clk,
-    input sw, swClearAlarm, swSubmitAlarm,
+    input sw, swClearAlarm, swPostPoneAlarm,
     input btnC, btnU, btnL, btnR, btnD,
     output [6:0] seg, 
     output [3:0] an,
@@ -44,7 +44,7 @@ module TopModule (
         .clk(clk),
         .sw(sw),
         .swClearAlarm(swClearAlarm),
-        .swSubmitAlarm(swSubmitAlarm),
+        .swPostPoneAlarm(swPostPoneAlarm),
         .trigger(trigger),
         .s1(s1),
         .s2(s2),
