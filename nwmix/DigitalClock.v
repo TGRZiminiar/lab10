@@ -66,10 +66,7 @@ module DigitalClock (
             currentMode <= (currentMode == CLOCK) ? ALARM : CLOCK;
         end
 
-        else if(swPostPoneAlarm == 1'b1 && btnC && !btnC_prev) begin
-            minAlarm <= minAlarm + 1'd1;
-            currentMode <= ALARM;
-        end
+        
 
         //if(swPostPoneAlarm) begin
             //currentMode <= (currentMode == 1'b0) ? 1'b1 : 1'b0;
@@ -79,7 +76,10 @@ module DigitalClock (
         case (currentMode)
             //Normal Clock
             CLOCK: begin
-                
+                if(swPostPoneAlarm == 1'b1 && btnC && !btnC_prev) begin
+                    minAlarm <= minAlarm + 1'd1;
+                end
+
                 case (pos)
                     1'b0: begin
                         if (btnU && !btnU_prev) begin   
@@ -118,24 +118,7 @@ module DigitalClock (
                             end
                         end
                     end 
-                    default: begin
-                        if (btnU && !btnU_prev) begin
-                            if (hour == 6'd24) begin
-                                hour <= 0;
-                            end
-                            else begin
-                                hour <= hour + 1'd1;
-                            end
-                        end
-                        else if(btnD && !btnD_prev) begin
-                            if (hour == 6'd0) begin
-                                hour <= 6'd59;
-                            end
-                            else begin
-                                hour <= hour - 1'd1;
-                            end
-                        end
-                    end
+                   
                 endcase
 
                
@@ -176,19 +159,18 @@ module DigitalClock (
             //Alarm Clock
             ALARM: begin
                 
-                if (hourAlarm == 6'd23) begin
+                if (hourAlarm >= 6'd23) begin
                     hourAlarm <= 0;
                 end
-                if (minAlarm == 6'd59) begin
+                if (minAlarm >= 6'd59) begin
                     minAlarm <= 0;
-                    hourAlarm <= hourAlarm + 1'd1;
                 end
 
 
                 case (pos)
                     1'b0: begin
                         if (btnU && !btnU_prev) begin   
-                            if (minAlarm == 6'd59) begin
+                            if (minAlarm >= 6'd59) begin
                                 minAlarm <= 0;
                             end
                             else begin
@@ -196,7 +178,7 @@ module DigitalClock (
                             end
                         end
                         else if(btnD && !btnD_prev) begin
-                            if (minAlarm == 6'd0) begin
+                            if (minAlarm >= 6'd0) begin
                                 minAlarm <= 6'd59;
                             end
                             else begin
@@ -204,10 +186,9 @@ module DigitalClock (
                             end
                         end
                     end
-
                     1'b1: begin
                         if (btnU && !btnU_prev) begin
-                            if (hourAlarm == 6'd24) begin
+                            if (hourAlarm >= 6'd24) begin
                                 hourAlarm <= 0;
                             end
                             else begin
@@ -215,7 +196,7 @@ module DigitalClock (
                             end
                         end
                         else if(btnD && !btnD_prev) begin
-                            if (hourAlarm == 6'd0) begin
+                            if (hourAlarm >= 6'd0) begin
                                 hourAlarm <= 6'd59;
                             end
                             else begin
