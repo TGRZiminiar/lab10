@@ -166,8 +166,8 @@ module DigitalClock (
 
             //Alarm Clock
             ALARM: begin
-                hourAlarm = hour;
-                minAlarm = min;
+                //hourAlarm = hour;
+                //minAlarm = min;
                 case (pos)
                     1'b0: begin
                         if (btnU && !btnU_prev) begin   
@@ -242,19 +242,11 @@ module DigitalClock (
        
     end
 
-    if (currentMode == CLOCK) begin
-        BinaryToBcd second(.binary(sec), .tens(s2), .ones(s1));    
-        BinaryToBcd minute(.binary(min), .tens(m2), .ones(m1));    
-        BinaryToBcd hourBinary(.binary(hour), .tens(h2), .ones(h1));    
-    end
-    else begin
-        BinaryToBcd second(.binary(secAlarm), .tens(s2), .ones(s1));    
-        BinaryToBcd minute(.binary(minAlarm), .tens(m2), .ones(m1));    
-        BinaryToBcd hourBinary(.binary(hourAlarm), .tens(h2), .ones(h1));    
-    end
-
-
-    
+   
+    BinaryToBcd second(.binary((currentMode == CLOCK) ? sec : secAlarm), .tens(s2), .ones(s1));    
+    BinaryToBcd minute(.binary((currentMode == CLOCK) ? min : minAlarm), .tens(m2), .ones(m1));    
+    BinaryToBcd hourBinary(.binary((currentMode == CLOCK) ? hour : hourAlarm), .tens(h2), .ones(h1));    
+      
 endmodule
 
 // initial begin

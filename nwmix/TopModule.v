@@ -5,7 +5,7 @@ module TopModule (
     input btnC, btnU, btnL, btnR, btnD,
     output [6:0] seg, 
     output [3:0] an,
-    output ledD1, ledD2, ledD3, ledTimeAlarm, ledAlarmMode,
+    output ledD1, ledD2, ledD3, ledTimeAlarm, ledAlarmMode, ledClockMode,
     output [5:0] led // display seconds
 
 );
@@ -71,7 +71,7 @@ module TopModule (
     //assign ledD2 = 
     assign ledD3 = (pos == 1'b1) ? 1'b1 : 1'b0;
     assign ledAlarmMode = (currentMode == 1'b1) ? 1'b1 : 1'b0;
-    assign ledD2 = (currentMode == 1'b0) ? 1'b1 : 1'b0;
+    assign ledClockMode = (currentMode == 1'b0) ? 1'b1 : 1'b0;
     //  if (ledAlarmMode == ALARM) ledAlarmMode <= 1'b1;
     //     else ledAlarmMode <= 1'b0;
 
