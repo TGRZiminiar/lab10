@@ -28,7 +28,8 @@ module DigitalClock (
     localparam numberFive = 4'b0101;
     localparam numberNine = 4'b1001;
     localparam onesec = 100_000_00; // 1 second
-    
+    // 1000_000_00
+
     localparam CLOCK = 1'b0;
     localparam ALARM = 1'b1; 
 
@@ -57,12 +58,16 @@ module DigitalClock (
             pos <= (pos == 1'b0) ? 1'b1 : 1'b0;
         end
         
-        if (btnR && !btnR_prev) begin
+        else if (btnR && !btnR_prev) begin
             pos <= (pos == 1'b1) ? 1'b0 : 1'b1;
         end
         
-        if(btnC && !btnC_prev) begin
+        else if(swPostPoneAlarm == 1'b0 && btnC && !btnC_prev) begin
             currentMode <= (currentMode == 1'b0) ? 1'b1 : 1'b0;
+        end
+
+        else if(swPostPoneAlarm == 1'b1 && btnC && !btnC_prev) begin
+            minAlarm <= minAlarm + 1'd1;
         end
 
         //if(swPostPoneAlarm) begin
@@ -132,9 +137,7 @@ module DigitalClock (
                     end
                 endcase
 
-                if(swPostPoneAlarm) begin
-                    minAlarm <= minAlarm + 1'd1;
-                end
+               
                
                 if(hour == hourAlarm && min == minAlarm) ledTimeAlarm = 1'b1;
                 else ledTimeAlarm = 1'b0;
@@ -177,7 +180,9 @@ module DigitalClock (
                 end
                 if (minAlarm == 6'd59) begin
                     minAlarm <= 0;
+                    hourAlarm <= hourAlarm + 1'd1;
                 end
+
 
                 case (pos)
                     1'b0: begin
