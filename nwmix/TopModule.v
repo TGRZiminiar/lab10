@@ -22,11 +22,6 @@ module TopModule (
         .clk_out(trigger)
     );
 
-    Debounce dbC(clk, btnC, btnCclr);   
-    Debounce dbL(clk, btnL, btnLclr);   
-    Debounce dbD(clk, btnD, btnDclr);   
-    Debounce dbU(clk, btnU, btnUclr); 
-    Debounce dbR(clk, btnR, btnRclr); // min up
 
     SevenSegDrive manage4digit(
         .clk(clk),
@@ -61,10 +56,6 @@ module TopModule (
         .btnD(btnD),
         .ledAlarmMode(ledAlarmMode),
         .ledTimeAlarm(ledTimeAlarm)
-        // .btnLclr_prev(btnLclr_prev),
-        // .btnLclr(btnLclr),
-        // .btnRclr_prev(btnRclr_prev),
-        // .btnRclr(btnRclr)
     );
 
     assign ledD1 = (pos == 1'b0) ? 1'b1 : 1'b0;
@@ -82,5 +73,4 @@ module TopModule (
     assign led[4] = (s2 == 5 && s1 != 9) ? 1'b1 : 1'b0;
     assign led[5] = (s2 == 5 && s1 == 9) ? 1'b1 : 1'b0;
     
-
 endmodule

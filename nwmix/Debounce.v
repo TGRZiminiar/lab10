@@ -1,5 +1,5 @@
 module Debounce (
-    input pb, clk_in,
+    input clk_in,pb,
     // pb = push button
     output led
 );

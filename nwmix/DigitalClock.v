@@ -15,7 +15,12 @@ module DigitalClock (
     output reg ledAlarmMode, ledTimeAlarm
 );
 
-    
+    wire btnCclr, btnLclr, btnDclr, btnUclr, btnRclr;
+    Debounce dbC(clk, btnC, btnCclr);   
+    Debounce dbL(clk, btnL, btnLclr);   
+    Debounce dbD(clk, btnD, btnDclr);   
+    Debounce dbU(clk, btnU, btnUclr); 
+    Debounce dbR(clk, btnR, btnRclr); // min up
     // 1  2  :  3  0  :  5  0
     // h2 h1 :  m2 m1 :  s2 s1
 
@@ -57,15 +62,15 @@ module DigitalClock (
             {hourAlarm, minAlarm} <= 0;
         end
 
-        if (btnL && !btnL_prev) begin
+        if (btnLclr && !btnL_prev) begin
             pos <= (pos == 1'b0) ? 1'b1 : 1'b0;
         end
         
-        else if (btnR && !btnR_prev) begin
+        else if (btnRclr && !btnR_prev) begin
             pos <= (pos == 1'b1) ? 1'b0 : 1'b1;
         end
         
-        else if(swPostPoneAlarm == 1'b0 && btnC && !btnC_prev) begin
+        else if(swPostPoneAlarm == 1'b0 && btnCclr && !btnC_prev) begin
             currentMode <= (currentMode == CLOCK) ? ALARM : CLOCK;
         end
 
@@ -79,13 +84,13 @@ module DigitalClock (
         case (currentMode)
             //Normal Clock
             CLOCK: begin
-                if(swPostPoneAlarm == 1'b1 && btnC && !btnC_prev) begin
+                if(swPostPoneAlarm == 1'b1 && btnCclr && !btnC_prev) begin
                     minAlarm <= minAlarm + 1'd1;
                 end
 
                 case (pos)
                     1'b0: begin
-                        if (btnU && !btnU_prev) begin   
+                        if (btnUclr && !btnU_prev) begin   
                             if (min == 6'd59) begin
                                 min <= 0;
                             end
@@ -93,7 +98,7 @@ module DigitalClock (
                                 min <= min + 1'd1;
                             end
                         end
-                        else if(btnD && !btnD_prev) begin
+                        else if(btnDclr && !btnD_prev) begin
                             if (min == 6'd0) begin
                                 min <= 6'd59;
                             end
@@ -104,7 +109,7 @@ module DigitalClock (
                     end
 
                     1'b1: begin
-                        if (btnU && !btnU_prev) begin
+                        if (btnUclr && !btnU_prev) begin
                             if (hour == 6'd24) begin
                                 hour <= 0;
                             end
@@ -112,7 +117,7 @@ module DigitalClock (
                                 hour <= hour + 1'd1;
                             end
                         end
-                        else if(btnD && !btnD_prev) begin
+                        else if(btnDclr && !btnD_prev) begin
                             if (hour == 6'd0) begin
                                 hour <= 6'd59;
                             end
@@ -162,26 +167,19 @@ module DigitalClock (
             //Alarm Clock
             ALARM: begin
                 
-                if (hourAlarm >= 6'd23) begin
-                    hourAlarm <= 0;
-                end
-                if (minAlarm >= 6'd59) begin
-                    minAlarm <= 0;
-                end
-
 
                 case (pos)
                     1'b0: begin
-                        if (btnU && !btnU_prev) begin   
-                            if (minAlarm >= 6'd59) begin
+                        if (btnUclr && !btnU_prev) begin   
+                            if (minAlarm == 6'd60) begin
                                 minAlarm <= 0;
                             end
                             else begin
                                 minAlarm <= minAlarm + 1'd1;
                             end
                         end
-                        else if(btnD && !btnD_prev) begin
-                            if (minAlarm >= 6'd0) begin
+                        else if(btnDclr && !btnD_prev) begin
+                            if (minAlarm == 6'd0) begin
                                 minAlarm <= 6'd59;
                             end
                             else begin
@@ -190,16 +188,16 @@ module DigitalClock (
                         end
                     end
                     1'b1: begin
-                        if (btnU && !btnU_prev) begin
-                            if (hourAlarm >= 6'd24) begin
+                        if (btnUclr && !btnU_prev) begin
+                            if (hourAlarm == 6'd24) begin
                                 hourAlarm <= 0;
                             end
                             else begin
                                 hourAlarm <= hourAlarm + 1'd1;
                             end
                         end
-                        else if(btnD && !btnD_prev) begin
-                            if (hourAlarm >= 6'd0) begin
+                        else if(btnDclr && !btnD_prev) begin
+                            if (hourAlarm == 6'd0) begin
                                 hourAlarm <= 6'd59;
                             end
                             else begin
@@ -208,7 +206,7 @@ module DigitalClock (
                         end
                     end 
                     default: begin
-                        if (btnU && !btnU_prev) begin
+                        if (btnUclr && !btnU_prev) begin
                             if (hourAlarm == 6'd24) begin
                                 hourAlarm <= 0;
                             end
@@ -216,7 +214,7 @@ module DigitalClock (
                                 hourAlarm <= hourAlarm + 1'd1;
                             end
                         end
-                        else if(btnD && !btnD_prev) begin
+                        else if(btnDclr && !btnD_prev) begin
                             if (hourAlarm == 6'd0) begin
                                 hourAlarm <= 6'd59;
                             end
@@ -233,11 +231,11 @@ module DigitalClock (
 
         endcase
         
-        btnC_prev <= btnC;
-        btnL_prev <= btnL;
-        btnR_prev <= btnR;
-        btnU_prev <= btnU;
-        btnD_prev <= btnD;
+        btnC_prev <= btnCclr;
+        btnL_prev <= btnLclr;
+        btnR_prev <= btnRclr;
+        btnU_prev <= btnUclr;
+        btnD_prev <= btnDclr;
        
     end
 

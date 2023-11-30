@@ -8,7 +8,7 @@ module Show_Clock_4Hz (
 
     always @(posedge clk_in) begin
         count <= count + 1;
-        if (count == 12_500_000) begin
+        if (count == 3_125_000) begin
             count <= 0;
             clk_out = ~clk_out;
         end
